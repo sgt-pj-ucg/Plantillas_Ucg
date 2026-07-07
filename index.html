@@ -6,411 +6,299 @@
 <title>Archivo de Plantillas · UCG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --tinta:#0E2841;--tinta-2:#16375B;
-    --dorado:#B8912B;--dorado-claro:#E6CE86;
-    --papel:#F6F3EC;--papel-2:#EFEBE0;--blanco:#FFFFFF;
-    --texto:#1A1F2A;--texto-tenue:#6A6459;--texto-suave:#918A7C;
-    --borde:#E4DED0;--borde-fuerte:#D6CFBE;
-    --verde:#1E7A54;--morado:#5B3FA0;
-    --r:14px;--r-lg:22px;
-    --sombra:0 1px 2px rgba(20,30,45,.04), 0 10px 30px rgba(20,30,45,.06);
-    --sombra-alta:0 24px 70px rgba(14,40,65,.16);
+    --ink:#0F172A; --ink-2:#1E293B;
+    --txt:#0F172A; --txt-2:#4B5563; --txt-3:#94A3B8;
+    --bg:#F5F6F8; --surface:#FFFFFF;
+    --border:#E8EAEF; --border-2:#DBDFE6;
+    --accent:#4F46E5; --accent-2:#4338CA; --accent-soft:#EEF0FE;
+    --mark:#E5E7FE;
+    --green:#0F9D6B; --red:#DC2626;
+    --r:12px; --r-lg:16px;
+    --sh-sm:0 1px 2px rgba(15,23,42,.05);
+    --sh:0 4px 14px rgba(15,23,42,.07);
+    --sh-lg:0 20px 50px rgba(15,23,42,.16);
     --e:cubic-bezier(.22,.7,.24,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Sora',system-ui,sans-serif;background:var(--papel);color:var(--texto);
-    font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  .grano{position:fixed;inset:0;pointer-events:none;z-index:9;opacity:.04;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .contenedor{max-width:1180px;margin:0 auto;padding:0 30px}
-  .mono{font-family:'IBM Plex Mono',monospace}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--txt);
+    font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:1220px;margin:0 auto;padding:0 24px}
 
-  /* HERO */
-  .hero{position:relative;color:#fff;overflow:hidden;isolation:isolate}
-  .hero-bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(165deg,#0C2238 0%,#0E2841 45%,#0A1D30 100%)}
-  .hero-aurora{position:absolute;inset:-30% -10% 0;z-index:-1;pointer-events:none;opacity:.8;
-    background:radial-gradient(600px 340px at 18% 15%,rgba(29,78,126,.55),transparent 60%),
-      radial-gradient(520px 360px at 88% 8%,rgba(184,145,43,.16),transparent 58%),
-      radial-gradient(700px 420px at 60% 100%,rgba(29,78,126,.35),transparent 62%);
-    animation:derivar 22s ease-in-out infinite alternate}
-  @keyframes derivar{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-3%,2%,0) scale(1.06)}}
-  .hero-sello{position:absolute;right:-60px;top:-40px;z-index:-1;width:520px;height:520px;opacity:.06;pointer-events:none;color:var(--dorado-claro)}
-  .hero-sello svg{width:100%;height:100%}
-  .hero-linea{position:absolute;left:0;right:0;bottom:0;height:2px;z-index:2;
-    background:linear-gradient(90deg,transparent,var(--dorado) 22%,var(--dorado-claro) 50%,var(--dorado) 78%,transparent);opacity:.85}
+  /* ═══ BARRA SUPERIOR (buscador siempre visible) ═══ */
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);backdrop-filter:blur(16px) saturate(1.4);
+    border-bottom:1px solid var(--border)}
+  .topbar-in{max-width:1220px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px}
+  .brand{display:flex;align-items:center;gap:11px;flex:none;text-decoration:none;color:inherit}
+  .brand-ic{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;
+    background:linear-gradient(145deg,#1E293B,#0F172A);color:#fff;box-shadow:var(--sh-sm)}
+  .brand-ic svg{width:20px;height:20px}
+  .brand-tx{display:flex;flex-direction:column;line-height:1.15}
+  .brand-tx b{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+  .brand-tx i{font-style:normal;font-size:11.5px;color:var(--txt-3);font-weight:500}
 
-  .barra-marca{padding:26px 0;display:flex;align-items:center;justify-content:space-between;gap:20px}
-  .marca{display:flex;align-items:center;gap:13px}
-  .escudo{width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;
-    background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.03));
-    border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
-  .escudo svg{width:23px;height:23px}
-  .marca-txt .org{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dorado-claro);font-weight:500}
-  .marca-txt .sub{font-size:12px;color:rgba(255,255,255,.6)}
-  .barra-marca .ubic{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-  .marca-derecha{display:flex;align-items:center;gap:18px}
-  .btn-ingresar{display:inline-flex;align-items:center;gap:8px;font-family:'Sora',sans-serif;font-size:13.5px;
-    font-weight:600;color:var(--tinta);background:linear-gradient(180deg,#F0D98A,#E6CE86);border:none;
-    padding:10px 16px;border-radius:11px;cursor:pointer;transition:.2s var(--e);box-shadow:0 6px 18px rgba(184,145,43,.28)}
-  .btn-ingresar:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(184,145,43,.36);filter:brightness(1.03)}
-  .btn-ingresar svg{width:17px;height:17px}
-  .btn-ingresar-min{padding:9px;border-radius:10px}
-  .btn-ingresar-min svg{width:16px;height:16px}
-
-  .hero-cuerpo{padding:40px 0 88px;position:relative;z-index:2}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--dorado-claro);margin-bottom:22px;font-weight:500}
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--dorado)}
-  .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(34px,5.4vw,60px);line-height:1.06;
-    letter-spacing:-.015em;margin-bottom:20px;max-width:14ch}
-  .hero h1 em{font-style:italic;color:var(--dorado-claro)}
-  .hero .lede{font-size:16.5px;color:rgba(255,255,255,.74);font-weight:300;max-width:52ch;line-height:1.7}
-
-  .buscador{margin-top:38px;max-width:680px;position:relative}
-  .buscador-caja{background:rgba(255,255,255,.97);border-radius:16px;box-shadow:0 20px 50px rgba(8,22,38,.4);
-    border:1px solid rgba(255,255,255,.5);display:flex;align-items:center;padding:7px 7px 7px 6px;gap:4px;
-    transition:box-shadow .25s var(--e)}
-  .buscador-caja:focus-within{box-shadow:0 24px 60px rgba(8,22,38,.5)}
-  .lupa{flex:none;width:50px;height:50px;display:grid;place-items:center;color:var(--tinta-2)}
-  .lupa svg{width:22px;height:22px}
-  #entrada{flex:1;border:none;outline:none;background:transparent;font-family:'Sora',sans-serif;
-    font-size:16.5px;color:var(--texto);padding:8px 2px}
-  #entrada::placeholder{color:#9c958a;font-weight:300}
-  .kbd{flex:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--texto-suave);
-    border:1px solid var(--borde-fuerte);border-radius:7px;padding:4px 9px;margin-right:6px;background:var(--papel)}
-  .btn-x{flex:none;border:none;background:var(--papel);color:var(--texto-tenue);width:38px;height:38px;
-    border-radius:9px;cursor:pointer;display:none;place-items:center;margin-right:6px;transition:.18s}
-  .btn-x:hover{background:var(--papel-2);color:var(--texto)}
+  .search{flex:1;display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border-2);
+    border-radius:12px;padding:0 8px 0 14px;height:46px;max-width:640px;margin:0 auto;transition:border-color .18s,box-shadow .18s}
+  .search:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+  .search .lupa{flex:none;color:var(--txt-3);display:grid;place-items:center}
+  .search .lupa svg{width:19px;height:19px}
+  #entrada{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;color:var(--txt);height:100%}
+  #entrada::placeholder{color:#9AA3B2;font-weight:400}
+  .kbd{flex:none;font-size:12px;font-weight:600;color:var(--txt-3);border:1px solid var(--border-2);
+    border-radius:6px;padding:2px 8px;background:var(--bg)}
+  .btn-x{flex:none;border:none;background:transparent;color:var(--txt-3);width:32px;height:32px;border-radius:8px;
+    cursor:pointer;display:none;place-items:center;transition:.15s}
+  .btn-x:hover{background:var(--bg);color:var(--txt)}
   .btn-x.on{display:grid}
-  .hero-stats{display:flex;gap:26px;margin-top:20px;flex-wrap:wrap}
-  .hero-stats .s{display:flex;align-items:baseline;gap:8px}
-  .hero-stats .n{font-family:'IBM Plex Mono',monospace;font-size:15px;color:#fff;font-weight:500}
-  .hero-stats .l{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 
-  /* STICKY */
-  .sticky{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(246,243,236,.82);
-    backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--borde);
-    transform:translateY(-100%);transition:transform .35s var(--e)}
-  .sticky.on{transform:none}
-  .sticky-in{max-width:1180px;margin:0 auto;padding:11px 30px;display:flex;align-items:center;gap:14px}
-  .marca-min{display:flex;align-items:center;gap:10px;flex:none}
-  .escudo-min{width:32px;height:32px;border-radius:9px;background:var(--tinta);display:grid;place-items:center}
-  .escudo-min svg{width:17px;height:17px;color:var(--dorado-claro)}
-  .sticky .nom{font-size:13px;font-weight:600;color:var(--tinta);letter-spacing:-.01em}
-  .sticky-busca{flex:1;display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--borde-fuerte);
-    border-radius:11px;padding:8px 14px;max-width:520px;margin-left:auto;transition:border-color .2s}
-  .sticky-busca:focus-within{border-color:var(--tinta-2)}
-  .sticky-busca svg{width:17px;height:17px;color:var(--texto-suave);flex:none}
-  #entrada2{flex:1;border:none;outline:none;background:transparent;font-family:'Sora',sans-serif;font-size:14px;color:var(--texto)}
-  #entrada2::placeholder{color:#a49d92;font-weight:300}
+  .btn-ingresar{flex:none;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:13.5px;
+    font-weight:600;color:#fff;background:var(--accent);border:none;padding:0 16px;height:44px;border-radius:11px;
+    cursor:pointer;transition:.18s var(--e);box-shadow:0 4px 12px rgba(79,70,229,.25)}
+  .btn-ingresar:hover{background:var(--accent-2);transform:translateY(-1px);box-shadow:0 8px 20px rgba(79,70,229,.32)}
+  .btn-ingresar svg{width:17px;height:17px}
+  .btn-ingresar .lbl-full{display:inline}
 
-  /* CUERPO */
-  main{padding:64px 0 96px;position:relative}
-  .aviso{display:flex;align-items:center;gap:13px;padding:14px 20px;border-radius:13px;margin-bottom:36px;
-    background:linear-gradient(180deg,#FBF6E7,#FAF3E0);border:1px solid #EBDDAF;color:#7a5c12;font-size:13px}
-  .aviso svg{width:19px;height:19px;flex:none;color:var(--dorado)}
-  .aviso b{color:#5f470e;font-weight:600}
+  /* ═══ CUERPO ═══ */
+  main{padding:26px 0 80px}
+  .aviso{display:flex;align-items:center;gap:11px;padding:12px 16px;border-radius:12px;margin-bottom:22px;
+    background:var(--accent-soft);border:1px solid #DDE0FB;color:#3730A3;font-size:13px}
+  .aviso svg{width:17px;height:17px;flex:none}
+  .aviso b{font-weight:700}
 
-  .control{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px}
-  .titulillo{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--texto-suave);margin-bottom:12px}
-  .filtros{display:flex;gap:9px;flex-wrap:wrap}
-  .chip{border:1px solid var(--borde-fuerte);background:var(--blanco);padding:8px 14px;border-radius:999px;
-    font-size:13.5px;font-weight:500;color:var(--texto-tenue);cursor:pointer;transition:.2s var(--e);
-    display:flex;align-items:center;gap:8px;white-space:nowrap}
-  .chip:hover{border-color:var(--tinta-2);color:var(--texto);transform:translateY(-1px)}
-  .chip.on{background:var(--tinta);border-color:var(--tinta);color:#fff}
-  .chip .c{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;background:rgba(0,0,0,.05);padding:1px 7px;border-radius:999px}
-  .chip.on .c{background:rgba(255,255,255,.18)}
-  .conteo{font-size:13.5px;color:var(--texto-tenue);white-space:nowrap}
-  .conteo b{font-family:'IBM Plex Mono',monospace;color:var(--texto);font-weight:600;font-size:15px}
+  .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--border-2);background:var(--surface);padding:7px 13px;border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--txt-2);cursor:pointer;transition:.16s var(--e);
+    display:flex;align-items:center;gap:7px;white-space:nowrap}
+  .chip:hover{border-color:#C3C8D4;color:var(--txt)}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip .c{font-size:11px;font-weight:700;background:rgba(0,0,0,.06);padding:1px 7px;border-radius:999px;color:inherit}
+  .chip.on .c{background:rgba(255,255,255,.2)}
+  .conteo{font-size:13px;color:var(--txt-2);white-space:nowrap}
+  .conteo b{color:var(--txt);font-weight:700}
 
-  /* FOLIOS */
-  .grilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
-  .folio{position:relative;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-lg);
-    padding:24px 24px 20px;cursor:pointer;overflow:hidden;
-    transition:transform .28s var(--e),box-shadow .28s var(--e),border-color .28s var(--e);
-    animation:subir .5s var(--e) both}
-  @keyframes subir{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  .folio::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;
-    background:linear-gradient(90deg,var(--dorado),var(--dorado-claro));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--e)}
-  .folio:hover{transform:translateY(-4px);box-shadow:var(--sombra);border-color:var(--borde-fuerte)}
-  .folio:hover::after{transform:scaleX(1)}
-  .folio:focus-visible{outline:2px solid var(--tinta-2);outline-offset:3px}
-  .folio-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .ref{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--texto-suave);font-weight:500}
-  .badge{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:7px}
-  .b-decreto{background:#EAF1F9;color:#16375B}
-  .b-resolucion{background:#F1ECFA;color:#5B3FA0}
-  .b-oficio{background:#E8F4EE;color:#1E7A54}
-  .b-acta{background:#FAF1DF;color:#9A6B00}
-  .b-otro{background:#EDEBE4;color:#6A6459}
-  .folio h3{font-family:'Fraunces',serif;font-weight:500;font-size:19px;line-height:1.28;letter-spacing:-.01em;margin-bottom:10px;color:var(--texto)}
-  .frag{font-size:13.5px;color:var(--texto-tenue);font-weight:300;line-height:1.62;
-    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px}
-  .folio-meta{display:flex;align-items:center;gap:16px;padding-top:14px;border-top:1px solid var(--papel-2);
-    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--texto-suave)}
-  .folio-meta span{display:flex;align-items:center;gap:6px}
-  .folio-meta svg{width:13px;height:13px;opacity:.65}
-  mark{background:linear-gradient(180deg,transparent 58%,rgba(184,145,43,.32) 58%);color:inherit;padding:0 1px;font-weight:500}
+  /* ═══ GRILLA ═══ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .folio{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:18px 18px 15px;cursor:pointer;overflow:hidden;
+    transition:transform .2s var(--e),box-shadow .2s var(--e),border-color .2s var(--e);animation:pop .35s var(--e) both}
+  @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .folio:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--border-2)}
+  .folio:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .folio-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+  .ref{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--txt-3)}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:.02em;padding:4px 9px;border-radius:7px;white-space:nowrap}
+  .b-decreto{background:#EAF0FE;color:#3B4FD1}
+  .b-resolucion{background:#F3ECFE;color:#7C3AED}
+  .b-oficio{background:#E4F6EE;color:#0F9D6B}
+  .b-acta{background:#FEF2E2;color:#C4791A}
+  .b-certificado{background:#E4F5F6;color:#0E7C86}
+  .b-correo{background:#FCEAF1;color:#C6417E}
+  .b-minuta{background:#EEF1F6;color:#55627A}
+  .b-otro{background:#EEF1F6;color:#64748B}
+  .folio h3{font-size:15.5px;font-weight:700;line-height:1.32;letter-spacing:-.01em;color:var(--txt);margin-bottom:8px}
+  .frag{font-size:13px;color:var(--txt-2);font-weight:400;line-height:1.55;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:13px}
+  .folio-meta{display:flex;align-items:center;gap:14px;padding-top:11px;border-top:1px solid var(--border);
+    font-size:11.5px;color:var(--txt-3);font-weight:500}
+  .folio-meta span{display:flex;align-items:center;gap:5px}
+  .folio-meta svg{width:13px;height:13px;opacity:.8}
+  mark{background:var(--mark);color:var(--accent-2);padding:0 2px;border-radius:4px;font-weight:600}
 
-  .cargando{align-items:center;justify-content:center;gap:14px;padding:80px 20px;color:var(--texto-tenue);font-size:14.5px}
-  .spinner{width:22px;height:22px;border:2.5px solid var(--borde-fuerte);border-top-color:var(--tinta);border-radius:50%;animation:girar .8s linear infinite}
-  @keyframes girar{to{transform:rotate(360deg)}}
-  .error-carga{text-align:center;padding:70px 20px;color:var(--texto-tenue)}
-  .error-carga svg{width:48px;height:48px;color:var(--dorado);margin-bottom:16px}
-  .error-carga h3{font-family:'Fraunces',serif;font-size:23px;font-weight:400;color:var(--texto);margin-bottom:8px}
-  .error-carga p{font-size:14px;max-width:440px;margin:0 auto 6px}
-  .error-carga code{font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--papel-2);padding:1px 6px;border-radius:5px}
-  .error-carga .detalle{font-size:12px;color:var(--texto-suave);margin-top:8px}
-  .error-acciones{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
-  .error-acciones .btn{flex:0 0 auto}
-  .vacio{display:none;text-align:center;padding:90px 20px;color:var(--texto-tenue)}
+  /* estados */
+  .cargando{display:none;align-items:center;justify-content:center;gap:12px;padding:70px 20px;color:var(--txt-2);font-size:14px}
+  .spinner{width:20px;height:20px;border:2.5px solid var(--border-2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-carga{display:none;text-align:center;padding:60px 20px;color:var(--txt-2)}
+  .error-carga svg{width:44px;height:44px;color:var(--accent);margin-bottom:14px}
+  .error-carga h3{font-size:19px;font-weight:700;color:var(--txt);margin-bottom:8px}
+  .error-carga p{font-size:13.5px;max-width:440px;margin:0 auto 6px}
+  .error-carga code{font-size:12.5px;background:var(--accent-soft);color:var(--accent-2);padding:1px 6px;border-radius:5px;font-weight:600}
+  .error-carga .detalle{font-size:12px;color:var(--txt-3);margin-top:8px}
+  .error-acciones{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+  .vacio{display:none;text-align:center;padding:70px 20px;color:var(--txt-2)}
   .vacio.on{display:block}
-  .vacio svg{width:52px;height:52px;color:var(--borde-fuerte);margin-bottom:20px}
-  .vacio h3{font-family:'Fraunces',serif;font-size:24px;font-weight:400;color:var(--texto);margin-bottom:8px}
-  .vacio p{font-size:14px;max-width:400px;margin:0 auto}
+  .vacio svg{width:46px;height:46px;color:var(--border-2);margin-bottom:16px}
+  .vacio h3{font-size:19px;font-weight:700;color:var(--txt);margin-bottom:8px}
+  .vacio p{font-size:13.5px;max-width:400px;margin:0 auto}
 
-  /* PANEL */
-  .telon{position:fixed;inset:0;background:rgba(14,40,65,.44);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:.3s;z-index:40}
+  /* ═══ BOTONES ═══ */
+  .btn{border:none;border-radius:11px;padding:13px 16px;font-family:inherit;font-size:14px;font-weight:600;
+    cursor:pointer;transition:.18s var(--e);display:flex;align-items:center;justify-content:center;gap:8px}
+  .btn svg{width:17px;height:17px}
+  .btn-1{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.24)}
+  .btn-1:hover{background:var(--accent-2);transform:translateY(-1px)}
+  .btn-1:disabled{opacity:.6;cursor:default;transform:none}
+  .btn-2{background:var(--surface);border:1px solid var(--border-2);color:var(--txt)}
+  .btn-2:hover{background:var(--bg)}
+
+  /* ═══ PANEL DETALLE ═══ */
+  .telon{position:fixed;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:.28s;z-index:40}
   .telon.on{opacity:1;visibility:visible}
-  .panel{position:fixed;top:0;right:0;bottom:0;width:min(580px,100%);background:var(--papel);z-index:50;
-    transform:translateX(101%);transition:transform .42s var(--e);display:flex;flex-direction:column;box-shadow:-30px 0 80px rgba(14,40,65,.22)}
+  .panel{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--surface);z-index:50;
+    transform:translateX(101%);transition:transform .4s var(--e);display:flex;flex-direction:column;box-shadow:var(--sh-lg)}
   .panel.on{transform:none}
-  .panel-cab{padding:26px 32px 20px;border-bottom:1px solid var(--borde);position:relative;background:var(--papel)}
-  .p-cerrar{position:absolute;top:22px;right:26px;width:36px;height:36px;border-radius:9px;
-    border:1px solid var(--borde-fuerte);background:#fff;cursor:pointer;color:var(--texto-tenue);display:grid;place-items:center;transition:.18s}
-  .p-cerrar:hover{background:var(--papel-2);color:var(--texto)}
+  .panel-cab{padding:22px 26px 18px;border-bottom:1px solid var(--border);position:relative}
+  .p-cerrar{position:absolute;top:18px;right:20px;width:34px;height:34px;border-radius:9px;border:1px solid var(--border-2);
+    background:var(--surface);cursor:pointer;color:var(--txt-2);display:grid;place-items:center;transition:.16s}
+  .p-cerrar:hover{background:var(--bg);color:var(--txt)}
   .p-cerrar svg{width:17px;height:17px}
-  .p-ref{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;color:var(--texto-suave);margin-bottom:12px;display:block}
-  #p-titulo{font-family:'Fraunces',serif;font-size:25px;font-weight:500;line-height:1.24;padding-right:40px;margin-bottom:14px}
-  .p-meta{display:flex;gap:20px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--texto-tenue)}
-  .p-meta span{display:flex;align-items:center;gap:7px}
-  .p-meta svg{width:14px;height:14px;opacity:.65}
-  .panel-cuerpo{flex:1;overflow-y:auto;padding:28px 32px}
-  .documento{background:#fff;border:1px solid var(--borde);border-radius:6px;position:relative;overflow:hidden;
-    box-shadow:0 1px 2px rgba(0,0,0,.03),0 12px 34px rgba(20,30,45,.07)}
-  .doc-timbre{padding:22px 40px;border-bottom:2px solid var(--tinta);display:flex;align-items:center;gap:12px;position:relative}
-  .doc-timbre::after{content:"";position:absolute;left:40px;right:40px;bottom:-4px;height:1px;background:var(--dorado);opacity:.5}
-  .doc-timbre .ts{width:34px;height:34px;flex:none;display:grid;place-items:center;color:var(--tinta)}
-  .doc-timbre .ts svg{width:26px;height:26px}
-  .doc-timbre .tt .a{font-family:'Fraunces',serif;font-size:13.5px;color:var(--tinta);font-weight:600;line-height:1.2}
-  .doc-timbre .tt .b{font-size:10.5px;color:var(--texto-suave);letter-spacing:.04em}
-  .doc-texto{padding:34px 40px 46px;font-size:13px;line-height:1.9;color:#2b303c;white-space:pre-wrap;
-    font-family:'Sora',sans-serif;font-weight:300;border-left:3px solid var(--papel-2);margin-left:2px}
-  .doc-texto strong{color:var(--tinta-2);font-weight:600;background:rgba(184,145,43,.09);padding:0 3px;border-radius:3px}
-  .panel-pie{padding:18px 32px 24px;border-top:1px solid var(--borde);display:flex;gap:12px;background:var(--papel)}
-  .btn{border:none;border-radius:12px;padding:14px 18px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:600;
-    cursor:pointer;transition:.22s var(--e);display:flex;align-items:center;justify-content:center;gap:9px}
-  .btn svg{width:18px;height:18px}
-  .btn-1{flex:1;background:var(--tinta);color:#fff;box-shadow:0 8px 22px rgba(14,40,65,.24)}
-  .btn-1:hover{background:#0a2036;transform:translateY(-1px);box-shadow:0 12px 30px rgba(14,40,65,.32)}
-  .btn-2{background:#fff;border:1px solid var(--borde-fuerte);color:var(--texto);padding:14px 18px}
-  .btn-2:hover{background:var(--papel-2)}
+  .p-ref{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--accent);margin-bottom:10px;display:inline-block}
+  #p-titulo{font-size:20px;font-weight:700;line-height:1.28;letter-spacing:-.01em;padding-right:40px;margin-bottom:12px}
+  .p-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--txt-2);font-weight:500}
+  .p-meta span{display:flex;align-items:center;gap:6px}
+  .p-meta svg{width:14px;height:14px;opacity:.75}
+  .panel-cuerpo{flex:1;overflow-y:auto;padding:24px 26px}
+  .documento{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--sh-sm)}
+  .doc-timbre{padding:16px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;background:var(--bg)}
+  .doc-timbre .ts{width:32px;height:32px;flex:none;border-radius:8px;display:grid;place-items:center;background:var(--ink);color:#fff}
+  .doc-timbre .ts svg{width:19px;height:19px}
+  .doc-timbre .tt .a{font-size:13px;color:var(--txt);font-weight:700;line-height:1.2}
+  .doc-timbre .tt .b{font-size:11px;color:var(--txt-3);font-weight:500}
+  .doc-texto{padding:24px 26px 34px;font-size:13px;line-height:1.85;color:#334155;white-space:pre-wrap;font-weight:400}
+  .doc-texto strong{color:var(--accent-2);font-weight:700;background:var(--accent-soft);padding:0 3px;border-radius:3px}
+  .panel-pie{padding:16px 26px 20px;border-top:1px solid var(--border);display:flex;gap:10px}
+  .panel-pie .btn-1{flex:1}
 
-  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--tinta);
-    color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 14px 34px rgba(14,40,65,.34);
-    opacity:0;visibility:hidden;transition:.3s var(--e);z-index:60;display:flex;align-items:center;gap:10px}
+  /* ═══ TOAST ═══ */
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--ink);color:#fff;
+    padding:12px 20px;border-radius:11px;font-size:13.5px;font-weight:600;box-shadow:var(--sh-lg);opacity:0;visibility:hidden;
+    transition:.28s var(--e);z-index:60;display:flex;align-items:center;gap:9px}
   .toast.on{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-  .toast svg{width:18px;height:18px;color:var(--dorado-claro)}
+  .toast svg{width:17px;height:17px;color:#A5B4FC}
 
-  footer{padding:34px 0;text-align:center;border-top:1px solid var(--borde)}
-  footer .f{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;color:var(--texto-suave)}
+  footer{padding:26px 0;text-align:center;border-top:1px solid var(--border)}
+  footer .f{font-size:11.5px;letter-spacing:.03em;color:var(--txt-3);font-weight:500}
 
-  /* badges de tipos adicionales */
-  .b-certificado{background:#E9F3F5;color:#0F6B78}
-  .b-correo{background:#F3EEF7;color:#7A4E9E}
-  .b-minuta{background:#F1F0E6;color:#7A6A24}
-
-  /* ===== LOGIN ===== */
-  .acceso{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px}
-  .acceso-bg{position:absolute;inset:0;background:linear-gradient(165deg,#0C2238,#0E2841 55%,#0A1D30);z-index:-1}
-  .acceso-bg::after{content:"";position:absolute;inset:0;opacity:.5;
-    background:radial-gradient(600px 340px at 20% 12%,rgba(29,78,126,.5),transparent 60%),radial-gradient(500px 340px at 85% 90%,rgba(184,145,43,.14),transparent 58%)}
-  .acceso-card{width:100%;max-width:400px;background:var(--papel);border-radius:20px;padding:40px 34px 32px;
-    text-align:center;box-shadow:0 40px 90px rgba(6,18,32,.5);border:1px solid rgba(255,255,255,.4);animation:subir .5s var(--e) both}
-  .acceso-escudo{width:52px;height:52px;border-radius:14px;background:var(--tinta);color:var(--dorado-claro);
-    display:grid;place-items:center;margin:0 auto 20px}
-  .acceso-escudo svg{width:28px;height:28px}
-  .acceso-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--texto-suave);margin-bottom:10px}
-  .acceso-card h2{font-family:'Fraunces',serif;font-size:23px;font-weight:500;line-height:1.2;margin-bottom:10px}
-  .acceso-card p{font-size:13.5px;color:var(--texto-tenue);margin-bottom:22px;line-height:1.55}
-  .acceso-campo{display:flex;align-items:center;background:#fff;border:1px solid var(--borde-fuerte);border-radius:12px;padding:4px 4px 4px 16px;transition:border-color .2s}
-  .acceso-campo:focus-within{border-color:var(--tinta-2)}
-  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:'Sora',sans-serif;font-size:15px;padding:11px 0;color:var(--texto)}
-  #verClave{border:none;background:var(--papel);color:var(--texto-tenue);width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.18s}
-  #verClave:hover{background:var(--papel-2)}
+  /* ═══ LOGIN ═══ */
+  .acceso{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;
+    background:linear-gradient(160deg,#1E293B,#0F172A)}
+  .acceso::before{content:"";position:absolute;inset:0;opacity:.6;
+    background:radial-gradient(600px 360px at 22% 15%,rgba(79,70,229,.35),transparent 60%),radial-gradient(500px 340px at 85% 85%,rgba(59,130,246,.18),transparent 60%)}
+  .acceso-card{position:relative;width:100%;max-width:390px;background:var(--surface);border-radius:20px;padding:36px 32px 30px;
+    text-align:center;box-shadow:var(--sh-lg);animation:pop .45s var(--e) both}
+  .acceso-ic{width:50px;height:50px;border-radius:14px;background:linear-gradient(145deg,#4F46E5,#4338CA);color:#fff;
+    display:grid;place-items:center;margin:0 auto 18px;box-shadow:0 8px 20px rgba(79,70,229,.3)}
+  .acceso-ic svg{width:26px;height:26px}
+  .acceso-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt-3);font-weight:700;margin-bottom:9px}
+  .acceso-card h2{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:9px}
+  .acceso-card p{font-size:13.5px;color:var(--txt-2);margin-bottom:22px;line-height:1.5}
+  .acceso-campo{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border-2);border-radius:12px;
+    padding:0 4px 0 15px;height:50px;transition:border-color .18s,box-shadow .18s}
+  .acceso-campo:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;height:100%;color:var(--txt)}
+  #verClave{border:none;background:transparent;color:var(--txt-3);width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s}
+  #verClave:hover{background:var(--bg)}
   #verClave svg{width:18px;height:18px}
-  .acceso-error{color:var(--rojo);font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left}
-  .acceso-btn{width:100%;margin-top:18px}
+  .acceso-error{color:var(--red);font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left;font-weight:500}
+  .acceso-btn{width:100%;margin-top:16px;height:48px}
 
-  /* ===== MODAL SUBIR ===== */
-  .panel-subir .campo{margin-bottom:20px}
-  .panel-subir .campo:last-of-type{margin-bottom:0}
-  .campo label{display:block;font-size:13px;font-weight:600;color:var(--texto);margin-bottom:8px}
-  .campo .req{color:var(--rojo)}
-  .campo .opt{color:var(--texto-suave);font-weight:400}
-  .campo input[type=text],.campo textarea,.campo select{
-    width:100%;font-family:'Sora',sans-serif;font-size:14.5px;color:var(--texto);background:#fff;
-    border:1px solid var(--borde-fuerte);border-radius:11px;padding:12px 14px;outline:none;transition:border-color .2s}
+  /* ═══ MODAL SUBIR ═══ */
+  .panel-subir .campo{margin-bottom:18px}
+  .campo label{display:block;font-size:13px;font-weight:700;color:var(--txt);margin-bottom:7px}
+  .campo .req{color:var(--red)}
+  .campo .opt{color:var(--txt-3);font-weight:500}
+  .campo input[type=text],.campo textarea,.campo select{width:100%;font-family:inherit;font-size:14px;color:var(--txt);
+    background:var(--surface);border:1.5px solid var(--border-2);border-radius:11px;padding:11px 13px;outline:none;transition:border-color .18s,box-shadow .18s}
+  .campo input:focus,.campo textarea:focus,.campo select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
   .campo textarea{resize:vertical;line-height:1.5}
-  .campo input:focus,.campo textarea:focus,.campo select:focus{border-color:var(--tinta-2)}
-  .dropzone{display:flex;flex-direction:column;align-items:center;gap:8px;padding:28px 20px;border:1.5px dashed var(--borde-fuerte);
-    border-radius:13px;background:#fff;cursor:pointer;transition:.2s;text-align:center}
-  .dropzone:hover,.dropzone.drag{border-color:var(--tinta-2);background:var(--papel)}
-  .dropzone.cargado{border-style:solid;border-color:var(--verde);background:#F0F7F2}
-  .dropzone svg{width:30px;height:30px;color:var(--texto-suave)}
-  .dropzone.cargado svg{color:var(--verde)}
-  .dz-texto{font-size:14px;font-weight:500;color:var(--texto)}
-  .dz-hint{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--texto-suave)}
-  .subir-error{color:var(--rojo);font-size:13px;min-height:18px;margin-top:8px}
+  .dropzone{display:flex;flex-direction:column;align-items:center;gap:7px;padding:26px 20px;border:1.5px dashed var(--border-2);
+    border-radius:13px;background:var(--surface);cursor:pointer;transition:.18s;text-align:center}
+  .dropzone:hover,.dropzone.drag{border-color:var(--accent);background:var(--accent-soft)}
+  .dropzone.cargado{border-style:solid;border-color:var(--green);background:#EFFaF5}
+  .dropzone svg{width:28px;height:28px;color:var(--txt-3)}
+  .dropzone.cargado svg{color:var(--green)}
+  .dz-texto{font-size:13.5px;font-weight:600;color:var(--txt)}
+  .dz-hint{font-size:11.5px;color:var(--txt-3);font-weight:500}
+  .subir-error{color:var(--red);font-size:13px;min-height:18px;margin-top:8px;font-weight:500}
 
-  @media(max-width:640px){
-    .contenedor{padding:0 20px}
-    .barra-marca .ubic{display:none}
-    .hero-cuerpo{padding:28px 0 66px}
-    .buscador-caja .kbd{display:none}
-    .hero-stats{gap:18px}
-    main{padding:52px 0 72px}
-    .control{align-items:flex-start}
-    .sticky .nom{display:none}
-    .doc-timbre,.doc-texto{padding-left:22px;padding-right:22px}
-    .panel-cuerpo{padding:20px}
-    .panel-pie{padding:16px 20px 20px}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition-duration:.01ms!important}
+  @media(max-width:720px){
+    .wrap,.topbar-in{padding-left:16px;padding-right:16px}
+    .topbar-in{flex-wrap:wrap;gap:10px}
+    .brand{order:1}
+    .btn-ingresar{order:2;margin-left:auto;padding:0 12px;height:40px}
+    .btn-ingresar .lbl-full{display:none}
+    .search{order:3;flex:1 1 100%;max-width:none;margin:0}
+    .search .kbd{display:none}
+    .doc-timbre,.doc-texto{padding-left:18px;padding-right:18px}
+    .panel-cuerpo{padding:18px}
+    .panel-pie{padding:14px 18px 18px}
   }
 </style>
 </head>
 <body>
-<div class="grano"></div>
 
-<header class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-aurora"></div>
-  <div class="hero-sello" aria-hidden="true">
-    <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.2">
-      <circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="74"/>
-      <path d="M100 40v120M55 62h90" stroke-width="1.6"/>
-      <path d="M62 62l-11 26a15 15 0 0 0 22 0L62 62zM138 62l-11 26a15 15 0 0 0 22 0L138 62z" stroke-width="1.6"/>
-      <path d="M80 160h40M100 160v-8"/>
-    </svg>
-  </div>
-  <div class="hero-linea"></div>
+<!-- ═══ BARRA SUPERIOR ═══ -->
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#">
+      <span class="brand-ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg>
+      </span>
+      <span class="brand-tx"><b>Archivo UCG</b><i>Corte de Apelaciones de La Serena</i></span>
+    </a>
 
-  <div class="contenedor">
-    <div class="barra-marca">
-      <div class="marca">
-        <div class="escudo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#E6CE86" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg>
-        </div>
-        <div class="marca-txt">
-          <div class="org">Unidad de Control de Gestión</div>
-          <div class="sub">Iltma. Corte de Apelaciones de La Serena</div>
-        </div>
-      </div>
-      <div class="marca-derecha">
-        <span class="ubic">Región de Coquimbo</span>
-        <button class="btn-ingresar" id="abrirSubir" title="Ingresar un nuevo documento">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-          Ingresar documento
-        </button>
-      </div>
+    <div class="search">
+      <span class="lupa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+      <input id="entrada" type="text" placeholder="Buscar por nombre o contenido…" autocomplete="off" spellcheck="false">
+      <span class="kbd" id="kbd">/</span>
+      <button class="btn-x" id="limpiar" aria-label="Limpiar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
 
-    <div class="hero-cuerpo">
-      <span class="eyebrow">Archivo documental interno</span>
-      <h1>El documento correcto, <em>en segundos</em>.</h1>
-      <p class="lede">Busca por nombre o por lo que dice el documento por dentro. Selecciona la plantilla y descárgala lista para editar en Word.</p>
-
-      <div class="buscador">
-        <div class="buscador-caja">
-          <div class="lupa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
-          <input id="entrada" type="text" placeholder="subrogación, feriado, SEREMI, comisión de servicio…" autocomplete="off" spellcheck="false">
-          <span class="kbd" id="kbd">/</span>
-          <button class="btn-x" id="limpiar" aria-label="Limpiar búsqueda"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-        </div>
-        <div class="hero-stats">
-          <div class="s"><span class="n" id="statTotal">—</span><span class="l">Documentos</span></div>
-          <div class="s"><span class="n">7</span><span class="l">Tipos</span></div>
-          <div class="s"><span class="n">Nombre + texto</span><span class="l">Búsqueda</span></div>
-        </div>
-      </div>
-    </div>
+    <button class="btn-ingresar" id="abrirSubir">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      <span class="lbl-full">Ingresar documento</span>
+    </button>
   </div>
 </header>
 
-<div class="sticky" id="sticky">
-  <div class="sticky-in">
-    <div class="marca-min">
-      <div class="escudo-min"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg></div>
-      <span class="nom">Archivo UCG</span>
-    </div>
-    <div class="sticky-busca">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="entrada2" type="text" placeholder="Buscar plantilla…" autocomplete="off" spellcheck="false">
-    </div>
-    <button class="btn-ingresar btn-ingresar-min" id="abrirSubir2" title="Ingresar documento">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-    </button>
-  </div>
-</div>
-
+<!-- ═══ CUERPO ═══ -->
 <main>
-  <div class="contenedor">
+  <div class="wrap">
     <div class="aviso" id="avisoDemo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
-      <div><b>Versión de demostración.</b> Las plantillas son de ejemplo. Al conectar la API (Google Apps Script), el archivo mostrará tus documentos reales y se activará el ingreso de documentos.</div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <div><b>Versión de demostración.</b> Los documentos son de ejemplo. Al conectar la API se mostrará el archivo real y se activará el ingreso de documentos.</div>
     </div>
 
-    <div class="control">
-      <div>
-        <div class="titulillo">Filtrar por tipo</div>
-        <div class="filtros" id="filtros"></div>
-      </div>
+    <div class="toolbar">
+      <div class="chips" id="filtros"></div>
       <div class="conteo" id="conteo"></div>
     </div>
 
-    <div class="cargando" id="cargando" style="display:none">
-      <span class="spinner"></span>
-      <span>Leyendo tus plantillas desde Drive…</span>
-    </div>
+    <div class="cargando" id="cargando"><span class="spinner"></span><span>Leyendo el archivo de documentos…</span></div>
 
-    <div class="error-carga" id="errorCarga" style="display:none">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-      <h3>No se pudo conectar con el archivo</h3>
-      <p>Revisa que el Web App esté desplegado con acceso «Cualquier usuario» y que la URL en <code>CONFIG.API_URL</code> sea correcta.</p>
-      <p class="detalle mono" id="errorDetalle"></p>
+    <div class="error-carga" id="errorCarga">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <h3>No se pudo conectar</h3>
+      <p>Revisa que el Web App esté publicado con acceso «Cualquier usuario» y que la URL en <code>API_URL</code> sea correcta.</p>
+      <p class="detalle" id="errorDetalle"></p>
       <div class="error-acciones">
         <button class="btn btn-1" id="reintentar">Reintentar</button>
         <button class="btn btn-2" id="verDemo">Ver demostración</button>
       </div>
     </div>
 
-    <div class="grilla" id="grilla"></div>
+    <div class="grid" id="grilla"></div>
 
     <div class="vacio" id="vacio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3M8 11h6"/></svg>
       <h3>Sin coincidencias</h3>
-      <p>No hay plantillas para esa búsqueda. Prueba otra palabra o cambia el filtro de tipo.</p>
+      <p>No hay documentos para esa búsqueda. Prueba otra palabra o cambia el filtro de tipo.</p>
     </div>
   </div>
 </main>
 
-<footer>
-  <div class="contenedor"><span class="f">UCG · ILTMA. CORTE DE APELACIONES DE LA SERENA · 2026</span></div>
-</footer>
+<footer><div class="wrap"><span class="f">Unidad de Control de Gestión · Iltma. Corte de Apelaciones de La Serena · 2026</span></div></footer>
 
+<!-- ═══ PANEL DETALLE ═══ -->
 <div class="telon" id="telon"></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-titulo">
   <div class="panel-cab">
     <button class="p-cerrar" id="cerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-    <span class="p-ref mono" id="p-ref"></span>
+    <span class="p-ref" id="p-ref"></span>
     <h2 id="p-titulo"></h2>
     <div class="p-meta">
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="p-fecha"></span></span>
@@ -420,11 +308,8 @@
   <div class="panel-cuerpo">
     <div class="documento">
       <div class="doc-timbre">
-        <div class="ts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg></div>
-        <div class="tt">
-          <div class="a">Poder Judicial de Chile</div>
-          <div class="b">Iltma. Corte de Apelaciones de La Serena</div>
-        </div>
+        <div class="ts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg></div>
+        <div class="tt"><div class="a">Poder Judicial de Chile</div><div class="b">Iltma. Corte de Apelaciones de La Serena</div></div>
       </div>
       <div class="doc-texto" id="p-cuerpo"></div>
     </div>
@@ -435,37 +320,33 @@
   </div>
 </aside>
 
+<!-- ═══ TOAST ═══ -->
 <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toast-txt"></span></div>
 
-<!-- ===== ACCESO (LOGIN) ===== -->
-<div class="acceso" id="acceso" style="display:none">
-  <div class="acceso-bg"></div>
+<!-- ═══ LOGIN ═══ -->
+<div class="acceso" id="acceso">
   <div class="acceso-card">
-    <div class="acceso-escudo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg>
-    </div>
+    <div class="acceso-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg></div>
     <div class="acceso-eyebrow">Archivo documental interno</div>
     <h2>Unidad de Control de Gestión</h2>
-    <p>Ingresa la clave de la Unidad para acceder al archivo de plantillas.</p>
+    <p>Ingresa la clave de la Unidad para acceder al archivo.</p>
     <div class="acceso-campo">
       <input id="claveInput" type="password" placeholder="Clave de acceso" autocomplete="off" spellcheck="false">
-      <button id="verClave" type="button" aria-label="Mostrar u ocultar clave">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-      </button>
+      <button id="verClave" type="button" aria-label="Mostrar u ocultar clave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
     <p class="acceso-error" id="accesoError"></p>
     <button class="btn btn-1 acceso-btn" id="entrarBtn">Entrar</button>
   </div>
 </div>
 
-<!-- ===== MODAL: INGRESAR DOCUMENTO ===== -->
+<!-- ═══ MODAL SUBIR ═══ -->
 <div class="telon" id="telonSubir"></div>
 <aside class="panel panel-subir" id="panelSubir" role="dialog" aria-modal="true" aria-labelledby="subir-titulo">
   <div class="panel-cab">
     <button class="p-cerrar" id="cerrarSubir" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-    <span class="p-ref mono">NUEVO INGRESO</span>
+    <span class="p-ref">NUEVO INGRESO</span>
     <h2 id="subir-titulo">Ingresar documento</h2>
-    <div class="p-meta"><span>El archivo se guarda en el repositorio sin dar acceso a la carpeta de origen.</span></div>
+    <div class="p-meta"><span>Se guarda en el repositorio sin dar acceso a la carpeta de origen.</span></div>
   </div>
   <div class="panel-cuerpo">
     <div class="campo">
@@ -475,9 +356,8 @@
     <div class="campo">
       <label for="f-tipo">Tipo</label>
       <select id="f-tipo">
-        <option>Decreto</option><option>Resolución</option><option>Oficio</option>
-        <option>Acta</option><option>Certificado</option><option>Correo</option>
-        <option>Minuta</option><option>Documento</option>
+        <option>Decreto</option><option>Resolución</option><option>Oficio</option><option>Acta</option>
+        <option>Certificado</option><option>Correo</option><option>Minuta</option><option>Documento</option>
       </select>
     </div>
     <div class="campo">
@@ -496,7 +376,7 @@
     <p class="subir-error" id="subirError"></p>
   </div>
   <div class="panel-pie">
-    <button class="btn btn-1" id="enviarSubir">
+    <button class="btn btn-1" id="enviarSubir" style="flex:1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
       Ingresar al archivo
     </button>
@@ -506,99 +386,70 @@
 <script>
 /* ============================================================
    ARCHIVO DE PLANTILLAS · UCG Corte de Apelaciones de La Serena
-   Demo autocontenida. Los datos de PLANTILLAS son de ejemplo;
-   luego se reemplazan por la lectura real de Drive/OneDrive.
    ============================================================ */
 "use strict";
 
-/* ─────────── CONFIGURACIÓN ───────────
-   Pega aquí la URL del Web App de Google Apps Script (termina en /exec)
-   una vez desplegado. Si queda vacío, la plataforma usa las 15 plantillas
-   de demostración. */
 const CONFIG = {
   API_URL: "https://script.google.com/macros/s/AKfycbzytNgwtS3FHybouT1Kf8rb0nqdu9YZs0vv7W3kP1SvZutN3hvSbJBbW0jt1EN2uJeH0w/exec"
 };
 
 const PLANTILLAS_DEMO = [
-  { id:1, tipo:"Decreto", titulo:"Decreto de subrogación de funcionario", unidad:"UCG", fecha:"2026-06-12",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nVISTOS Y TENIENDO PRESENTE lo dispuesto en el Código Orgánico de Tribunales, y encontrándose ausente el/la funcionario/a titular del cargo por [motivo], para el debido funcionamiento del servicio,\n\nSE DECRETA:\n\nDesígnase como subrogante en el cargo de [cargo] a don(ña) [Nombre del funcionario], por el período comprendido entre el __ y el __ de __________ de 20__, ambas fechas inclusive.\n\nAnótese, comuníquese y archívese." },
-  { id:2, tipo:"Decreto", titulo:"Decreto de feriado legal", unidad:"UCG", fecha:"2026-06-05",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nVISTA la solicitud de feriado legal presentada por don(ña) [Nombre], y considerando que a la fecha registra saldo suficiente de días conforme a la normativa vigente,\n\nSE DECRETA:\n\nConcédese feriado legal por [N°] días hábiles a don(ña) [Nombre], entre el __ y el __ de __________ de 20__, debiendo reintegrarse a sus funciones el día __.\n\nAnótese y comuníquese a la Unidad de Recursos Humanos." },
-  { id:3, tipo:"Decreto", titulo:"Decreto de comisión de servicio", unidad:"UCG", fecha:"2026-05-28",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nTENIENDO PRESENTE la necesidad de desplazamiento del personal para el cumplimiento de labores propias del servicio,\n\nSE DECRETA:\n\nDispónese que don(ña) [Nombre], [cargo], se traslade en comisión de servicio a la ciudad de [ciudad], los días __ y __ de __________ de 20__, con el objeto de [objetivo]. Procédase al pago de viáticos que correspondan conforme a la escala vigente.\n\nAnótese, comuníquese y archívese." },
-  { id:4, tipo:"Resolución", titulo:"Resolución de designación de Ministro visitador", unidad:"Presidencia", fecha:"2026-06-18",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nEn uso de las facultades que confiere el Código Orgánico de Tribunales a esta Iltma. Corte,\n\nSE RESUELVE:\n\nDesígnase al Ministro don(ña) [Nombre] para que practique visita [ordinaria/extraordinaria] al [tribunal/unidad], a fin de verificar el estado de tramitación de las causas y el cumplimiento de las obligaciones funcionarias, debiendo evacuar el informe respectivo dentro del plazo de [N°] días.\n\nComuníquese." },
-  { id:5, tipo:"Oficio", titulo:"Oficio de respuesta a SEREMI", unidad:"UCG", fecha:"2026-06-20",
-    cuerpo:"OFICIO N° ____\nLa Serena, __ de __________ de 20__.\n\nDE: Presidencia Iltma. Corte de Apelaciones de La Serena\nA : Señor(a) Secretario(a) Regional Ministerial de [cartera], Región de Coquimbo\n\nEn atención a su Oficio N° ____, de fecha __, mediante el cual solicita [materia], cumplo con informar a usted lo siguiente:\n\n[Desarrollo de la respuesta].\n\nSin otro particular, saluda atentamente a usted." },
-  { id:6, tipo:"Oficio", titulo:"Oficio de remisión de antecedentes", unidad:"UCG", fecha:"2026-05-30",
-    cuerpo:"OFICIO N° ____\nLa Serena, __ de __________ de 20__.\n\nA : [Destinatario]\n\nJunto con saludar, y en cumplimiento de lo instruido, remito a usted los antecedentes que se individualizan a continuación:\n\n1. [Documento]\n2. [Documento]\n\nLo anterior, para su conocimiento y fines pertinentes.\n\nSaluda atentamente a usted." },
-  { id:7, tipo:"Acta", titulo:"Acta de sesión de coordinación", unidad:"UCG", fecha:"2026-06-15",
-    cuerpo:"ACTA DE SESIÓN DE COORDINACIÓN\n\nEn La Serena, a __ de __________ de 20__, siendo las __:__ horas, se reúnen [asistentes], con el objeto de [objetivo de la sesión].\n\nTABLA:\n1. [Punto]\n2. [Punto]\n\nDESARROLLO Y ACUERDOS:\n[Detalle de lo tratado y acuerdos adoptados, con responsables y plazos].\n\nSe levanta la sesión a las __:__ horas, firmando los asistentes." },
-  { id:8, tipo:"Decreto", titulo:"Decreto de permiso administrativo", unidad:"UCG", fecha:"2026-06-02",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nVISTA la solicitud de permiso administrativo con goce de remuneraciones presentada por don(ña) [Nombre],\n\nSE DECRETA:\n\nConcédese permiso administrativo por [N°] día(s) a don(ña) [Nombre], correspondiente al día __ de __________ de 20__, imputándose al total anual que le corresponde.\n\nAnótese y comuníquese a Recursos Humanos." },
-  { id:9, tipo:"Resolución", titulo:"Resolución de autorización de teletrabajo", unidad:"Presidencia", fecha:"2026-05-22",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nTENIENDO PRESENTE la solicitud presentada y la normativa institucional sobre trabajo a distancia,\n\nSE RESUELVE:\n\nAutorízase a don(ña) [Nombre] para desempeñar sus funciones bajo modalidad de teletrabajo los días [días], por el período comprendido entre el __ y el __ de __________ de 20__, debiendo mantener disponibilidad y reporte conforme a las instrucciones vigentes.\n\nComuníquese." },
-  { id:10, tipo:"Oficio", titulo:"Oficio de solicitud de información a tribunal", unidad:"UCG", fecha:"2026-06-08",
-    cuerpo:"OFICIO N° ____\nLa Serena, __ de __________ de 20__.\n\nA : Señor(a) [Juez/Administrador] del [Tribunal]\n\nEn el marco de las labores de control de gestión de esta Unidad, solicito a usted remitir la siguiente información respecto de [materia], correspondiente al período [período]:\n\n1. [Dato requerido]\n2. [Dato requerido]\n\nAgradeceré remitir lo solicitado dentro del plazo de [N°] días hábiles.\n\nSaluda atentamente a usted." },
-  { id:11, tipo:"Decreto", titulo:"Decreto de cometido funcionario con viático", unidad:"UCG", fecha:"2026-05-19",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nTENIENDO PRESENTE la necesidad del servicio,\n\nSE DECRETA:\n\nDispónese el cometido funcionario de don(ña) [Nombre] a la ciudad de [ciudad], los días __ al __ de __________ de 20__, con el objeto de [objetivo]. Autorízase el pago de viáticos y pasajes conforme a la normativa vigente, con cargo al presupuesto institucional.\n\nAnótese, comuníquese y archívese." },
-  { id:12, tipo:"Acta", titulo:"Acta de reunión de unidad", unidad:"UCG", fecha:"2026-06-11",
-    cuerpo:"ACTA DE REUNIÓN DE UNIDAD\n\nEn La Serena, a __ de __________ de 20__, siendo las __:__ horas, se reúne el equipo de la Unidad de Control de Gestión, con la asistencia de [asistentes].\n\nTEMAS TRATADOS:\n1. [Tema]\n2. [Tema]\n\nACUERDOS:\n- [Acuerdo], responsable [Nombre], plazo __.\n\nSe cierra la reunión a las __:__ horas." },
-  { id:13, tipo:"Oficio", titulo:"Oficio COT Art. 482 quater — renuncia notario/conservador", unidad:"Presidencia", fecha:"2026-06-25",
-    cuerpo:"OFICIO N° ____\nLa Serena, __ de __________ de 20__.\n\nMATERIA: Comunica renuncia y aplicación del artículo 482 quater letra f) del Código Orgánico de Tribunales.\n\nA : [Destinatario]\n\nComunico a usted que don(ña) [Nombre], [Notario/Conservador] de [comuna], ha presentado renuncia a su cargo con fecha __. En razón de lo anterior, y conforme a lo dispuesto en el artículo 482 quater letra f) del Código Orgánico de Tribunales, se ha dispuesto [gestión correspondiente].\n\nSaluda atentamente a usted." },
-  { id:14, tipo:"Resolución", titulo:"Resolución de instrucción interna", unidad:"UCG", fecha:"2026-05-26",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nCon el objeto de estandarizar los procedimientos de esta Corte y sus tribunales,\n\nSE RESUELVE:\n\nImpártense las siguientes instrucciones de aplicación general:\n\n1. [Instrucción]\n2. [Instrucción]\n\nLas presentes instrucciones regirán a contar de esta fecha. Comuníquese a las unidades y tribunales que corresponda." },
-  { id:15, tipo:"Decreto", titulo:"Decreto de reemplazo por licencia médica", unidad:"UCG", fecha:"2026-06-14",
-    cuerpo:"La Serena, a __ de __________ de 20__.\n\nVISTA la licencia médica presentada por don(ña) [Nombre], que lo/la mantiene con reposo por el período __ al __ de __________ de 20__,\n\nSE DECRETA:\n\nDispónese el reemplazo en las funciones de [cargo] por don(ña) [Nombre del reemplazante], mientras dure el período de licencia médica indicado.\n\nAnótese, comuníquese y archívese." }
+  { id:1, tipo:"Decreto", titulo:"Decreto de subrogación de funcionario", descripcion:"", unidad:"UCG", fecha:"2026-06-12",
+    cuerpo:"La Serena, a __ de __________ de 20__.\n\nVISTOS Y TENIENDO PRESENTE lo dispuesto en el Código Orgánico de Tribunales, y encontrándose ausente el/la funcionario/a titular del cargo por [motivo],\n\nSE DECRETA:\n\nDesígnase como subrogante en el cargo de [cargo] a don(ña) [Nombre], por el período entre el __ y el __ de __________ de 20__.\n\nAnótese, comuníquese y archívese." },
+  { id:2, tipo:"Oficio", titulo:"Oficio de respuesta a SEREMI", descripcion:"", unidad:"UCG", fecha:"2026-06-20",
+    cuerpo:"OFICIO N° ____\nLa Serena, __ de __________ de 20__.\n\nA : Señor(a) Secretario(a) Regional Ministerial de [cartera], Región de Coquimbo\n\nEn atención a su Oficio N° ____, cumplo con informar a usted lo siguiente:\n\n[Desarrollo].\n\nSaluda atentamente a usted." },
+  { id:3, tipo:"Resolución", titulo:"Resolución de autorización de teletrabajo", descripcion:"", unidad:"Presidencia", fecha:"2026-05-22",
+    cuerpo:"La Serena, a __ de __________ de 20__.\n\nSE RESUELVE:\n\nAutorízase a don(ña) [Nombre] para desempeñar sus funciones bajo modalidad de teletrabajo los días [días].\n\nComuníquese." },
+  { id:4, tipo:"Acta", titulo:"Acta de reunión de unidad", descripcion:"", unidad:"UCG", fecha:"2026-06-11",
+    cuerpo:"ACTA DE REUNIÓN DE UNIDAD\n\nEn La Serena, a __ de __________ de 20__, se reúne el equipo de la UCG.\n\nTEMAS:\n1. [Tema]\n\nACUERDOS:\n- [Acuerdo], responsable [Nombre], plazo __." },
+  { id:5, tipo:"Certificado", titulo:"Certificado de transferencia", descripcion:"", unidad:"UCG", fecha:"2026-05-30",
+    cuerpo:"CERTIFICADO\n\nSe certifica que [detalle de la transferencia], conforme a los antecedentes tenidos a la vista.\n\nLa Serena, __ de __________ de 20__." },
+  { id:6, tipo:"Correo", titulo:"Correo de bienvenida nuevo funcionario", descripcion:"", unidad:"UCG", fecha:"2026-07-01",
+    cuerpo:"Estimado(a) [Nombre]:\n\nTe damos la bienvenida a la Iltma. Corte de Apelaciones de La Serena. A continuación, información útil para tus primeros días: [detalle].\n\nSaludos cordiales." },
+  { id:7, tipo:"Minuta", titulo:"Minuta de coordinación", descripcion:"", unidad:"UCG", fecha:"2026-06-15",
+    cuerpo:"MINUTA\n\nAsunto: [asunto].\nPuntos tratados:\n1. [Punto]\n\nCompromisos:\n- [Compromiso], responsable [Nombre]." }
 ];
-
-// Array activo: se llena con datos reales (API) o con la demo.
-let PLANTILLAS = [];
 
 const PREFIJO = { "Decreto":"DEC", "Resolución":"RES", "Oficio":"OFI", "Acta":"ACT", "Certificado":"CER", "Correo":"COR", "Minuta":"MIN", "Documento":"DOC" };
 const CLASE_BADGE = { "Decreto":"b-decreto", "Resolución":"b-resolucion", "Oficio":"b-oficio", "Acta":"b-acta", "Certificado":"b-certificado", "Correo":"b-correo", "Minuta":"b-minuta", "Documento":"b-otro" };
 
-// Correlativo por tipo → folio estilo expediente (DEC-01, DEC-02, …)
+let PLANTILLAS = [];
+let filtroTipo = "Todos";
+let consulta = "";
+
 function asignarFolios(arr){
   const c={};
-  arr.forEach(p=>{
-    const pref = PREFIJO[p.tipo] || "DOC";
-    c[pref]=(c[pref]||0)+1;                 // correlativo por prefijo (evita folios repetidos)
-    p.folio = pref + "-" + String(c[pref]).padStart(2,"0");
-  });
+  arr.forEach(p=>{ const pref=PREFIJO[p.tipo]||"DOC"; c[pref]=(c[pref]||0)+1; p.folio=pref+"-"+String(c[pref]).padStart(2,"0"); });
 }
 
 const $entrada=document.getElementById("entrada");
-const $entrada2=document.getElementById("entrada2");
 const $limpiar=document.getElementById("limpiar");
 const $grilla=document.getElementById("grilla");
 const $vacio=document.getElementById("vacio");
 const $conteo=document.getElementById("conteo");
 const $filtros=document.getElementById("filtros");
-
-let filtroTipo="Todos";
-let consulta="";
+const $cargando=document.getElementById("cargando");
+const $errorCarga=document.getElementById("errorCarga");
 
 function normalizar(t){ return (t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
-function escaparHTML(s){ return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function escaparHTML(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function resaltar(txtEsc,terminos){
   if(!terminos.length) return txtEsc;
   let r=txtEsc;
-  terminos.forEach(t=>{ if(!t) return;
-    const e=t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    r=r.replace(new RegExp("("+e+")","gi"),"<mark>$1</mark>"); });
+  terminos.forEach(t=>{ if(!t) return; const e=t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); r=r.replace(new RegExp("("+e+")","gi"),"<mark>$1</mark>"); });
   return r;
 }
 function fragmentoRelevante(cuerpo,terminosNorm){
-  const limpio=cuerpo.replace(/\n+/g," ").replace(/\s+/g," ").trim();
+  const limpio=(cuerpo||"").replace(/\n+/g," ").replace(/\s+/g," ").trim();
   const limpioNorm=normalizar(limpio);
   let pos=-1;
   for(const t of terminosNorm){ const p=limpioNorm.indexOf(t); if(p>=0&&(pos<0||p<pos)) pos=p; }
-  if(pos<0) return limpio.slice(0,150);
-  const ini=Math.max(0,pos-55);
-  return (ini>0?"… ":"")+limpio.slice(ini,ini+170);
+  if(pos<0) return limpio.slice(0,140);
+  const ini=Math.max(0,pos-50);
+  return (ini>0?"… ":"")+limpio.slice(ini,ini+160);
 }
 function fmtFecha(iso){
+  if(!iso) return "";
   const m=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
   const [a,mm,d]=iso.split("-"); return parseInt(d)+" "+m[parseInt(mm)-1]+" "+a;
 }
@@ -607,14 +458,10 @@ function construirFiltros(){
   const tipos=["Todos",...Array.from(new Set(PLANTILLAS.map(p=>p.tipo)))];
   $filtros.innerHTML=tipos.map(tp=>{
     const n=tp==="Todos"?PLANTILLAS.length:PLANTILLAS.filter(p=>p.tipo===tp).length;
-    return '<button class="chip '+(tp==='Todos'?'on':'')+'" data-tipo="'+tp+'">'+tp+'<span class="c">'+n+'</span></button>';
+    return '<button class="chip '+(tp===filtroTipo?'on':'')+'" data-tipo="'+escaparHTML(tp)+'">'+escaparHTML(tp)+'<span class="c">'+n+'</span></button>';
   }).join("");
   $filtros.querySelectorAll(".chip").forEach(ch=>{
-    ch.addEventListener("click",()=>{
-      filtroTipo=ch.dataset.tipo;
-      $filtros.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===ch));
-      render();
-    });
+    ch.addEventListener("click",()=>{ filtroTipo=ch.dataset.tipo; $filtros.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===ch)); render(); });
   });
 }
 
@@ -635,7 +482,7 @@ function render(){
       const tb=tNorm.some(x=>normalizar(b.titulo).includes(x))?0:1;
       if(ta!==tb) return ta-tb;
     }
-    return b.fecha.localeCompare(a.fecha);
+    return (b.fecha||"").localeCompare(a.fecha||"");
   });
 
   $conteo.innerHTML="<b>"+lista.length+"</b> "+(lista.length===1?'documento':'documentos')+(consulta?" · «"+escaparHTML(consulta)+"»":"");
@@ -645,11 +492,10 @@ function render(){
 
   $grilla.innerHTML=lista.map((p,i)=>{
     const tituloH=resaltar(escaparHTML(p.titulo),tVis);
-    // Si hay descripción, se muestra ella; si no, un fragmento del contenido.
-    const base = (p.descripcion && p.descripcion.trim()) ? p.descripcion : fragmentoRelevante(p.cuerpo,tNorm);
+    const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:fragmentoRelevante(p.cuerpo,tNorm);
     const fragH=resaltar(escaparHTML(base),tVis);
     const folioH=resaltar(escaparHTML(p.folio),tVis);
-    return '<article class="folio" style="animation-delay:'+Math.min(i*45,340)+'ms" data-id="'+p.id+'" tabindex="0" role="button" aria-label="Abrir '+escaparHTML(p.titulo)+'">'
+    return '<article class="folio" style="animation-delay:'+Math.min(i*35,300)+'ms" data-id="'+p.id+'" tabindex="0" role="button" aria-label="Abrir '+escaparHTML(p.titulo)+'">'
       +'<div class="folio-top"><span class="ref">'+folioH+' · '+escaparHTML(p.unidad)+'</span>'
       +'<span class="badge '+(CLASE_BADGE[p.tipo]||'b-otro')+'">'+escaparHTML(p.tipo)+'</span></div>'
       +'<h3>'+tituloH+'</h3>'
@@ -666,10 +512,10 @@ function render(){
   });
 }
 
+/* ─── Panel detalle ─── */
 const $telon=document.getElementById("telon");
 const $panel=document.getElementById("panel");
 let actual=null;
-
 function abrirPanel(id){
   const p=PLANTILLAS.find(x=>x.id===id); if(!p) return;
   actual=p;
@@ -685,15 +531,8 @@ $telon.addEventListener("click",cerrarPanel);
 document.getElementById("cerrar").addEventListener("click",cerrarPanel);
 
 function descargarWord(p){
-  // Si viene de Drive y trae URL de descarga, se baja el archivo real (conserva formato).
-  if(p.urlDescarga){
-    window.open(p.urlDescarga,"_blank");
-    toast("Abriendo descarga del archivo original…");
-    return;
-  }
-  // Modo demo: se genera un .doc editable a partir del texto.
-  const cuerpoHTML=escaparHTML(p.cuerpo).replace(/\n/g,"<br>")
-    .replace(/(\[[^\]]+\])/g,'<span style="color:#16375B;font-weight:bold">$1</span>');
+  if(p.urlDescarga){ window.open(p.urlDescarga,"_blank"); toast("Abriendo descarga del archivo original…"); return; }
+  const cuerpoHTML=escaparHTML(p.cuerpo).replace(/\n/g,"<br>").replace(/(\[[^\]]+\])/g,'<span style="color:#4338CA;font-weight:bold">$1</span>');
   const html="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>"
     +"<head><meta charset='utf-8'><title>"+escaparHTML(p.titulo)+"</title>"
     +"<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->"
@@ -714,6 +553,7 @@ document.getElementById("copiar").addEventListener("click",async()=>{
   catch(e){ toast("No se pudo copiar automáticamente"); }
 });
 
+/* ─── Toast ─── */
 let tTimer=null;
 function toast(msg){
   const $t=document.getElementById("toast");
@@ -721,145 +561,94 @@ function toast(msg){
   $t.classList.add("on"); clearTimeout(tTimer); tTimer=setTimeout(()=>$t.classList.remove("on"),2600);
 }
 
+/* ─── Búsqueda ─── */
 let deb=null;
 function onInput(v){
-  consulta=v.trim();
+  consulta=(v||"").trim();
   $limpiar.classList.toggle("on",consulta.length>0);
-  if($entrada.value!==v)$entrada.value=v;
-  if($entrada2.value!==v)$entrada2.value=v;
-  clearTimeout(deb); deb=setTimeout(render,120);
+  clearTimeout(deb); deb=setTimeout(render,110);
 }
 $entrada.addEventListener("input",e=>onInput(e.target.value));
-$entrada2.addEventListener("input",e=>onInput(e.target.value));
-$limpiar.addEventListener("click",()=>{ onInput(""); $entrada.focus(); });
-
-const centinela=document.querySelector(".buscador");
-const $sticky=document.getElementById("sticky");
-if("IntersectionObserver" in window && centinela){
-  new IntersectionObserver(function(entries){ $sticky.classList.toggle("on",!entries[0].isIntersecting); },
-    {rootMargin:"-70px 0px 0px 0px"}).observe(centinela);
-}
+$limpiar.addEventListener("click",()=>{ $entrada.value=""; onInput(""); $entrada.focus(); });
 
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){
-    if($panel.classList.contains("on")) cerrarPanel();
-    else if(consulta) onInput("");
+    if(document.getElementById("panelSubir").classList.contains("on")) return cerrarSubir();
+    if($panel.classList.contains("on")) return cerrarPanel();
+    if(consulta){ $entrada.value=""; onInput(""); }
     return;
   }
-  const escribiendo=/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
-  if(e.key==="/"&&!escribiendo){ e.preventDefault(); ($sticky.classList.contains("on")?$entrada2:$entrada).focus(); }
+  const escribiendo=/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if(e.key==="/"&&!escribiendo){ e.preventDefault(); $entrada.focus(); }
 });
 
-// ═══════════════ CAPA DE DATOS / API ═══════════════
-const $cargando=document.getElementById("cargando");
-const $errorCarga=document.getElementById("errorCarga");
-let claveSesion="";   // se guarda en memoria tras el login (no se persiste)
-
-function mostrarEstado(estado){ // 'cargando' | 'error' | 'ok'
+/* ═══ DATOS / API ═══ */
+let claveSesion="";
+function mostrarEstado(estado){
   $cargando.style.display = estado==="cargando" ? "flex" : "none";
   $errorCarga.style.display = estado==="error" ? "block" : "none";
   $grilla.style.display = estado==="ok" ? "grid" : "none";
 }
-
-// Petición POST con cuerpo JSON en texto plano (evita preflight CORS con Apps Script)
-async function apiPost(action, extra){
-  const cuerpo = Object.assign({ action: action, clave: claveSesion }, extra||{});
-  const resp = await fetch(CONFIG.API_URL, {
-    method:"POST",
-    headers:{ "Content-Type":"text/plain;charset=utf-8" },
-    body: JSON.stringify(cuerpo)
-  });
+async function apiPost(action,extra){
+  const cuerpo=Object.assign({action:action,clave:claveSesion},extra||{});
+  const resp=await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(cuerpo)});
   if(!resp.ok) throw new Error("HTTP "+resp.status);
-  const data = await resp.json();
-  if(data && data.error){ const e=new Error(data.mensaje||"Error"); e.codigo=data.codigo; throw e; }
+  const data=await resp.json();
+  if(data&&data.error){ const er=new Error(data.mensaje||"Error"); er.codigo=data.codigo; throw er; }
   return data;
 }
-
 function normalizarRegistros(arr){
   return arr.map((d,i)=>({
-    id: d.id!=null ? d.id : i+1,
-    tipo: d.tipo || "Documento",
-    titulo: d.titulo || "(Sin título)",
-    descripcion: d.descripcion || "",
-    unidad: d.unidad || "UCG",
-    fecha: d.fecha || "",
-    cuerpo: d.cuerpo || "",
-    urlDescarga: d.urlDescarga || "",
-    urlVer: d.urlVer || ""
+    id: d.id!=null?d.id:i+1, tipo:d.tipo||"Documento", titulo:d.titulo||"(Sin título)",
+    descripcion:d.descripcion||"", unidad:d.unidad||"UCG", fecha:d.fecha||"",
+    cuerpo:d.cuerpo||"", urlDescarga:d.urlDescarga||"", urlVer:d.urlVer||""
   }));
 }
-
 function pintarCatalogo(){
-  asignarFolios(PLANTILLAS);
-  mostrarEstado("ok");
-  construirFiltros();
-  render();
-  const nStat=document.getElementById("statTotal");
-  if(nStat) nStat.textContent = PLANTILLAS.length;
+  asignarFolios(PLANTILLAS); mostrarEstado("ok"); construirFiltros(); render();
 }
-
-// Trae el catálogo real desde el backend (requiere clave válida)
 async function cargarCatalogo(){
   mostrarEstado("cargando");
   try{
-    const data = await apiPost("listar");
-    const arr = data.plantillas || [];
+    const data=await apiPost("listar");
+    const arr=data.plantillas||[];
     if(!Array.isArray(arr)) throw new Error("Respuesta inválida del servidor");
-    PLANTILLAS = normalizarRegistros(arr);
-    pintarCatalogo();
+    PLANTILLAS=normalizarRegistros(arr); pintarCatalogo();
   }catch(err){
-    console.error("Error al cargar catálogo:",err);
-    document.getElementById("errorDetalle").textContent = err.message;
-    mostrarEstado("error");
+    document.getElementById("errorDetalle").textContent=err.message; mostrarEstado("error");
   }
 }
-
-// Modo demostración (sin API): no exige clave
 function usarDemo(){
-  PLANTILLAS = JSON.parse(JSON.stringify(PLANTILLAS_DEMO));
-  PLANTILLAS.forEach(p=>{ if(p.descripcion==null) p.descripcion=""; });
-  pintarCatalogo();
+  PLANTILLAS=JSON.parse(JSON.stringify(PLANTILLAS_DEMO)); pintarCatalogo();
 }
 
-// ─────────── LOGIN ───────────
+/* ─── Login ─── */
 const $acceso=document.getElementById("acceso");
 const $claveInput=document.getElementById("claveInput");
 const $accesoError=document.getElementById("accesoError");
-
 function mostrarLogin(){ $acceso.style.display="flex"; setTimeout(()=>$claveInput.focus(),100); }
 function ocultarLogin(){ $acceso.style.display="none"; }
-
 async function intentarEntrar(){
   const clave=$claveInput.value.trim();
   if(!clave){ $accesoError.textContent="Escribe la clave."; return; }
   $accesoError.textContent="";
   const $btn=document.getElementById("entrarBtn");
-  $btn.disabled=true; $btn.textContent="Verificando…";
-  claveSesion=clave;
+  $btn.disabled=true; $btn.textContent="Verificando…"; claveSesion=clave;
   try{
     const data=await apiPost("listar");
-    // Éxito: clave correcta
-    PLANTILLAS = normalizarRegistros(data.plantillas||[]);
-    ocultarLogin();
-    pintarCatalogo();
-    habilitarSubida();
+    PLANTILLAS=normalizarRegistros(data.plantillas||[]);
+    ocultarLogin(); pintarCatalogo();
   }catch(err){
     claveSesion="";
-    if(err.codigo==="CLAVE"){ $accesoError.textContent="Clave incorrecta. Inténtalo de nuevo."; }
-    else{ $accesoError.textContent="No se pudo conectar: "+err.message; }
+    $accesoError.textContent = err.codigo==="CLAVE" ? "Clave incorrecta. Inténtalo de nuevo." : ("No se pudo conectar: "+err.message);
     $claveInput.select();
-  }finally{
-    $btn.disabled=false; $btn.textContent="Entrar";
-  }
+  }finally{ $btn.disabled=false; $btn.textContent="Entrar"; }
 }
 document.getElementById("entrarBtn").addEventListener("click",intentarEntrar);
 $claveInput.addEventListener("keydown",e=>{ if(e.key==="Enter") intentarEntrar(); });
-document.getElementById("verClave").addEventListener("click",()=>{
-  $claveInput.type = $claveInput.type==="password" ? "text" : "password";
-  $claveInput.focus();
-});
+document.getElementById("verClave").addEventListener("click",()=>{ $claveInput.type=$claveInput.type==="password"?"text":"password"; $claveInput.focus(); });
 
-// ─────────── SUBIR DOCUMENTO ───────────
+/* ─── Subir documento ─── */
 const $telonSubir=document.getElementById("telonSubir");
 const $panelSubir=document.getElementById("panelSubir");
 const $fArchivo=document.getElementById("f-archivo");
@@ -869,31 +658,16 @@ const $subirError=document.getElementById("subirError");
 let archivoElegido=null;
 
 function subidaDisponible(){ return !!CONFIG.API_URL && !!claveSesion; }
-function habilitarSubida(){ /* los botones ya están; se validan al abrir */ }
-
 function abrirSubir(){
-  if(!subidaDisponible()){
-    toast("El ingreso de documentos se activa al conectar la API.");
-    return;
-  }
-  $subirError.textContent="";
-  $telonSubir.classList.add("on"); $panelSubir.classList.add("on");
-  document.body.style.overflow="hidden";
+  if(!subidaDisponible()){ toast("El ingreso de documentos se activa al conectar la API."); return; }
+  $subirError.textContent=""; $telonSubir.classList.add("on"); $panelSubir.classList.add("on"); document.body.style.overflow="hidden";
 }
-function cerrarSubir(){
-  $telonSubir.classList.remove("on"); $panelSubir.classList.remove("on");
-  document.body.style.overflow="";
-}
+function cerrarSubir(){ $telonSubir.classList.remove("on"); $panelSubir.classList.remove("on"); document.body.style.overflow=""; }
 document.getElementById("abrirSubir").addEventListener("click",abrirSubir);
-document.getElementById("abrirSubir2").addEventListener("click",abrirSubir);
 document.getElementById("cerrarSubir").addEventListener("click",cerrarSubir);
 $telonSubir.addEventListener("click",cerrarSubir);
 
-function fijarArchivo(file){
-  archivoElegido=file;
-  $dzTexto.textContent=file.name;
-  $dropzone.classList.add("cargado");
-}
+function fijarArchivo(file){ archivoElegido=file; $dzTexto.textContent=file.name; $dropzone.classList.add("cargado"); }
 $fArchivo.addEventListener("change",e=>{ if(e.target.files[0]) fijarArchivo(e.target.files[0]); });
 ["dragenter","dragover"].forEach(ev=>$dropzone.addEventListener(ev,e=>{ e.preventDefault(); $dropzone.classList.add("drag"); }));
 ["dragleave","drop"].forEach(ev=>$dropzone.addEventListener(ev,e=>{ e.preventDefault(); $dropzone.classList.remove("drag"); }));
@@ -902,12 +676,11 @@ $dropzone.addEventListener("drop",e=>{ const f=e.dataTransfer.files[0]; if(f) fi
 function leerBase64(file){
   return new Promise((resolve,reject)=>{
     const r=new FileReader();
-    r.onload=()=>resolve(String(r.result).split(",")[1]);   // quita el prefijo data:
+    r.onload=()=>resolve(String(r.result).split(",")[1]);
     r.onerror=()=>reject(new Error("No se pudo leer el archivo"));
     r.readAsDataURL(file);
   });
 }
-
 document.getElementById("enviarSubir").addEventListener("click",async()=>{
   const titulo=document.getElementById("f-titulo").value.trim();
   const tipo=document.getElementById("f-tipo").value;
@@ -915,44 +688,29 @@ document.getElementById("enviarSubir").addEventListener("click",async()=>{
   $subirError.textContent="";
   if(!titulo){ $subirError.textContent="Escribe el nombre del documento."; return; }
   if(!archivoElegido){ $subirError.textContent="Selecciona un archivo Word."; return; }
-
   const $btn=document.getElementById("enviarSubir");
-  const original=$btn.innerHTML;
-  $btn.disabled=true; $btn.textContent="Ingresando…";
+  const original=$btn.innerHTML; $btn.disabled=true; $btn.textContent="Ingresando…";
   try{
     const base64=await leerBase64(archivoElegido);
-    const mime=archivoElegido.type || "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-    await apiPost("subir",{ titulo, tipo, descripcion, nombreArchivo:archivoElegido.name, archivoBase64:base64, mimeType:mime });
+    const mime=archivoElegido.type||"application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    await apiPost("subir",{titulo,tipo,descripcion,nombreArchivo:archivoElegido.name,archivoBase64:base64,mimeType:mime});
     toast("Documento ingresado al archivo ✓");
-    // limpia el formulario
-    document.getElementById("f-titulo").value="";
-    document.getElementById("f-desc").value="";
-    archivoElegido=null; $dzTexto.textContent="Arrastra un Word aquí o haz clic para elegir";
-    $dropzone.classList.remove("cargado");
-    cerrarSubir();
-    await cargarCatalogo();   // recarga (el nuevo doc puede tardar en procesarse)
+    document.getElementById("f-titulo").value=""; document.getElementById("f-desc").value="";
+    archivoElegido=null; $dzTexto.textContent="Arrastra un Word aquí o haz clic para elegir"; $dropzone.classList.remove("cargado");
+    cerrarSubir(); await cargarCatalogo();
   }catch(err){
-    if(err.codigo==="CLAVE"){ $subirError.textContent="La sesión expiró. Vuelve a entrar."; }
-    else{ $subirError.textContent="No se pudo ingresar: "+err.message; }
-  }finally{
-    $btn.disabled=false; $btn.innerHTML=original;
-  }
+    $subirError.textContent = err.codigo==="CLAVE" ? "La sesión expiró. Vuelve a entrar." : ("No se pudo ingresar: "+err.message);
+  }finally{ $btn.disabled=false; $btn.innerHTML=original; }
 });
 
-// ─────────── ARRANQUE ───────────
-document.getElementById("reintentar")?.addEventListener("click",cargarCatalogo);
-document.getElementById("verDemo")?.addEventListener("click",()=>{ ocultarLogin(); usarDemo(); });
+/* ═══ ARRANQUE ═══ */
+document.getElementById("reintentar").addEventListener("click",cargarCatalogo);
+document.getElementById("verDemo").addEventListener("click",()=>{ ocultarLogin(); const a=document.getElementById("avisoDemo"); if(a) a.style.display="flex"; usarDemo(); });
 
 function iniciar(){
-  if(!CONFIG.API_URL){
-    // Sin backend configurado → demostración abierta.
-    usarDemo();
-  }else{
-    // Con backend → oculta el aviso demo y pide la clave.
-    const av=document.getElementById("avisoDemo"); if(av) av.style.display="none";
-    mostrarEstado("cargando");
-    mostrarLogin();
-  }
+  if(!CONFIG.API_URL){ usarDemo(); return; }
+  const a=document.getElementById("avisoDemo"); if(a) a.style.display="none";
+  mostrarEstado("cargando"); mostrarLogin();
 }
 iniciar();
 </script>
