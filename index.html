@@ -161,8 +161,30 @@
   .doc-timbre .tt .b{font-size:11px;color:var(--txt-3);font-weight:500}
   .doc-texto{padding:24px 26px 34px;font-size:13px;line-height:1.85;color:#334155;white-space:pre-wrap;font-weight:400}
   .doc-texto strong{color:var(--accent-2);font-weight:700;background:var(--accent-soft);padding:0 3px;border-radius:3px}
-  .panel-pie{padding:16px 26px 20px;border-top:1px solid var(--border);display:flex;gap:10px}
-  .panel-pie .btn-1{flex:1}
+  .panel-pie{padding:16px 26px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
+  .panel-pie .fila-secundaria{display:flex;gap:9px}
+  .panel-pie .fila-secundaria .btn{flex:1;font-size:13px;padding:11px 8px}
+  .btn-mail{background:linear-gradient(135deg,#2B6FEE,#1D4ED8);color:#fff;box-shadow:0 4px 14px rgba(29,78,216,.28)}
+  .btn-mail:hover{filter:brightness(1.06);transform:translateY(-1px)}
+  .btn-peligro{color:#C0392B;border-color:#F3D2D2}
+  .btn-peligro:hover{background:#FDF1F1;border-color:#F0B4B4;color:#B91C1C}
+
+  /* ═══ CONFIRMAR ELIMINACIÓN ═══ */
+  .confirm-dialog{position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:rgba(15,23,42,.45);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:.2s var(--e)}
+  .confirm-dialog.on{opacity:1;visibility:visible}
+  .confirm-card{background:var(--surface);border-radius:18px;max-width:380px;width:100%;padding:28px 26px;text-align:center;
+    box-shadow:var(--sh-lg);transform:translateY(10px) scale(.97);transition:transform .2s var(--e)}
+  .confirm-dialog.on .confirm-card{transform:none}
+  .confirm-ic{width:46px;height:46px;border-radius:12px;background:#FDECEC;color:#C0392B;display:grid;place-items:center;margin:0 auto 16px}
+  .confirm-ic svg{width:22px;height:22px}
+  .confirm-card h3{font-size:17px;font-weight:700;margin-bottom:8px;color:var(--txt)}
+  .confirm-card p{font-size:13px;color:var(--txt-2);line-height:1.5;margin-bottom:20px}
+  .confirm-botones{display:flex;gap:10px}
+  .confirm-botones .btn{flex:1}
+  .btn-eliminar{background:#DC2626;color:#fff}
+  .btn-eliminar:hover{background:#B91C1C}
+  .btn-eliminar:disabled{opacity:.65;cursor:default}
 
   /* ═══ TOAST ═══ */
   .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--ink);color:#fff;
@@ -252,14 +274,15 @@
     border:1px solid var(--border-2);border-radius:var(--r-lg);box-shadow:var(--sh-lg);padding:18px 20px;
     opacity:0;visibility:hidden;transform:translateY(4px) scale(.98);transform-origin:top left;
     transition:opacity .16s var(--e),transform .16s var(--e),visibility .16s;pointer-events:none}
-  .quickview.on{opacity:1;visibility:visible;transform:none}
+  .quickview.on{opacity:1;visibility:visible;transform:none;pointer-events:auto}
   .quickview .qv-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
   .quickview .qv-ref{font-size:11px;font-weight:700;color:var(--txt-3)}
   .quickview h4{font-size:15.5px;font-weight:700;line-height:1.3;letter-spacing:-.01em;margin-bottom:9px}
-  .quickview .qv-cuerpo{font-size:12.5px;line-height:1.65;color:var(--txt-2);max-height:230px;overflow:hidden;
-    position:relative;font-weight:400}
-  .quickview .qv-cuerpo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;
-    background:linear-gradient(180deg,transparent,var(--surface))}
+  .quickview .qv-cuerpo{font-size:12.5px;line-height:1.68;color:var(--txt-2);max-height:320px;overflow-y:auto;
+    position:relative;font-weight:400;padding-right:6px;overscroll-behavior:contain}
+  .quickview .qv-cuerpo::-webkit-scrollbar{width:7px}
+  .quickview .qv-cuerpo::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:10px}
+  .quickview .qv-cuerpo::-webkit-scrollbar-thumb:hover{background:var(--txt-3)}
   .quickview .qv-hint{margin-top:12px;font-size:11.5px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px}
   .quickview .qv-hint svg{width:13px;height:13px}
 
@@ -387,9 +410,62 @@
   </div>
   <div class="panel-pie">
     <button class="btn btn-1" id="descargar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Descargar Word editable</button>
-    <button class="btn btn-2" id="copiar" title="Copiar texto" aria-label="Copiar texto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+    <button class="btn btn-mail" id="enviarCorreo" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Enviar por correo</button>
+    <div class="fila-secundaria">
+      <button class="btn btn-2" id="copiar" title="Copiar texto" aria-label="Copiar texto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar</button>
+      <button class="btn btn-2" id="btnEditar" title="Editar datos" aria-label="Editar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>Editar</button>
+      <button class="btn btn-2 btn-peligro" id="btnEliminar" title="Eliminar" aria-label="Eliminar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Eliminar</button>
+    </div>
   </div>
 </aside>
+
+<!-- ═══ MODAL: EDITAR DOCUMENTO ═══ -->
+<div class="telon" id="telonEditar"></div>
+<aside class="panel panel-subir" id="panelEditar" role="dialog" aria-modal="true" aria-labelledby="editar-titulo">
+  <div class="panel-cab">
+    <button class="p-cerrar" id="cerrarEditar" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <span class="p-ref">EDITAR REGISTRO</span>
+    <h2 id="editar-titulo">Editar documento</h2>
+    <div class="p-meta"><span>Solo se edita el título, tipo y descripción. El archivo Word original no se modifica.</span></div>
+  </div>
+  <div class="panel-cuerpo">
+    <div class="campo">
+      <label for="ed-titulo">Nombre del documento <span class="req">*</span></label>
+      <input id="ed-titulo" type="text" placeholder="Ej: Decreto de subrogación de administrador">
+    </div>
+    <div class="campo">
+      <label for="ed-tipo">Tipo</label>
+      <select id="ed-tipo">
+        <option>Decreto</option><option>Resolución</option><option>Oficio</option><option>Acta</option>
+        <option>Certificado</option><option>Correo</option><option>Minuta</option><option>Documento</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label for="ed-desc">Descripción <span class="opt">(ayuda a encontrarlo después)</span></label>
+      <textarea id="ed-desc" rows="3" placeholder="Breve descripción: para qué sirve, cuándo se usa, palabras clave…"></textarea>
+    </div>
+    <p class="subir-error" id="editarError"></p>
+  </div>
+  <div class="panel-pie">
+    <button class="btn btn-1" id="guardarEdicion" style="flex:1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Guardar cambios
+    </button>
+  </div>
+</aside>
+
+<!-- ═══ CONFIRMAR ELIMINACIÓN ═══ -->
+<div class="confirm-dialog" id="confirmDialog" role="alertdialog" aria-modal="true">
+  <div class="confirm-card">
+    <div class="confirm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
+    <h3>¿Eliminar este documento?</h3>
+    <p id="confirm-texto">Se moverá a la papelera de Drive y podrá recuperarse desde allí si es necesario.</p>
+    <div class="confirm-botones">
+      <button class="btn btn-2" id="cancelarEliminar">Cancelar</button>
+      <button class="btn btn-eliminar" id="confirmarEliminar">Sí, eliminar</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ VISTA RÁPIDA (hover / tap) ═══ -->
 <div class="quickview" id="quickview">
@@ -627,9 +703,9 @@ function render(){
     el.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); abrirPanel(Number(el.dataset.id)); } });
     if(hoverFino){
       el.addEventListener("mouseenter",()=>programarVista(el,Number(el.dataset.id)));
-      el.addEventListener("mouseleave",cancelarVista);
+      el.addEventListener("mouseleave",()=>{ clearTimeout(vistaTimer); programarOcultar(); });
       el.addEventListener("focus",()=>programarVista(el,Number(el.dataset.id)));
-      el.addEventListener("blur",cancelarVista);
+      el.addEventListener("blur",()=>{ clearTimeout(vistaTimer); programarOcultar(); });
     }
   });
   $grilla.querySelectorAll(".fav-btn").forEach(b=>{
@@ -657,6 +733,7 @@ function abrirPanel(id){
   document.getElementById("p-fecha").textContent=fmtFechaAbs(p.fecha);
   document.getElementById("p-unidad").textContent=p.unidad;
   document.getElementById("p-cuerpo").innerHTML=escaparHTML(p.cuerpo).replace(/(\[[^\]]+\])/g,"<strong>$1</strong>");
+  document.getElementById("enviarCorreo").style.display = (p.tipo==="Correo") ? "flex" : "none";
   $telon.classList.add("on"); $panel.classList.add("on"); document.body.style.overflow="hidden";
 }
 function cerrarPanel(){ $telon.classList.remove("on"); $panel.classList.remove("on"); document.body.style.overflow=""; }
@@ -686,6 +763,81 @@ document.getElementById("copiar").addEventListener("click",async()=>{
   catch(e){ toast("No se pudo copiar automáticamente"); }
 });
 
+/* ─── Enviar por correo (mailto: abre el cliente de correo predeterminado) ─── */
+function abrirCorreo(p){
+  const asunto=encodeURIComponent(p.titulo||"");
+  const cuerpoTexto=(p.cuerpo||"").replace(/\n/g,"\r\n");
+  const cuerpoCod=encodeURIComponent(cuerpoTexto);
+  if((asunto.length+cuerpoCod.length) > 1800){
+    toast("El texto es largo: si tu cliente de correo lo recorta, usa 'Copiar' y pégalo manualmente.");
+  }
+  window.location.href="mailto:?subject="+asunto+"&body="+cuerpoCod;
+}
+document.getElementById("enviarCorreo").addEventListener("click",()=>{ if(actual) abrirCorreo(actual); });
+
+/* ─── Editar documento (solo título, tipo y descripción) ─── */
+const $telonEditar=document.getElementById("telonEditar");
+const $panelEditar=document.getElementById("panelEditar");
+function puedeEditarOEliminar(p){ return subidaDisponible() && !!(p && p.fileId); }
+function abrirEditar(p){
+  document.getElementById("ed-titulo").value=p.titulo||"";
+  document.getElementById("ed-tipo").value=p.tipo||"Documento";
+  document.getElementById("ed-desc").value=p.descripcion||"";
+  document.getElementById("editarError").textContent="";
+  $telonEditar.classList.add("on"); $panelEditar.classList.add("on"); document.body.style.overflow="hidden";
+}
+function cerrarEditar(){ $telonEditar.classList.remove("on"); $panelEditar.classList.remove("on"); document.body.style.overflow=""; }
+document.getElementById("cerrarEditar").addEventListener("click",cerrarEditar);
+$telonEditar.addEventListener("click",cerrarEditar);
+document.getElementById("btnEditar").addEventListener("click",()=>{
+  if(!actual) return;
+  if(!puedeEditarOEliminar(actual)){ toast("Disponible solo con el archivo real conectado."); return; }
+  abrirEditar(actual);
+});
+document.getElementById("guardarEdicion").addEventListener("click",async()=>{
+  if(!actual) return;
+  const titulo=document.getElementById("ed-titulo").value.trim();
+  const tipo=document.getElementById("ed-tipo").value;
+  const descripcion=document.getElementById("ed-desc").value.trim();
+  const $err=document.getElementById("editarError"); $err.textContent="";
+  if(!titulo){ $err.textContent="Escribe el nombre del documento."; return; }
+  const $btn=document.getElementById("guardarEdicion");
+  const original=$btn.innerHTML; $btn.disabled=true; $btn.textContent="Guardando…";
+  try{
+    await apiPost("editar",{fileId:actual.fileId,titulo,tipo,descripcion});
+    toast("Documento actualizado ✓");
+    cerrarEditar(); cerrarPanel();
+    await cargarCatalogo();
+  }catch(err){
+    $err.textContent = err.codigo==="CLAVE" ? "La sesión expiró. Vuelve a entrar." : ("No se pudo guardar: "+err.message);
+  }finally{ $btn.disabled=false; $btn.innerHTML=original; }
+});
+
+/* ─── Eliminar documento (mueve a la papelera de Drive, reversible) ─── */
+const $confirmDialog=document.getElementById("confirmDialog");
+document.getElementById("btnEliminar").addEventListener("click",()=>{
+  if(!actual) return;
+  if(!puedeEditarOEliminar(actual)){ toast("Disponible solo con el archivo real conectado."); return; }
+  document.getElementById("confirm-texto").textContent="«"+actual.titulo+"» se moverá a la papelera de Drive y podrá recuperarse desde allí si es necesario.";
+  $confirmDialog.classList.add("on");
+});
+document.getElementById("cancelarEliminar").addEventListener("click",()=>{ $confirmDialog.classList.remove("on"); });
+$confirmDialog.addEventListener("click",e=>{ if(e.target===$confirmDialog) $confirmDialog.classList.remove("on"); });
+document.getElementById("confirmarEliminar").addEventListener("click",async()=>{
+  if(!actual) return;
+  const $btn=document.getElementById("confirmarEliminar");
+  const original=$btn.textContent; $btn.disabled=true; $btn.textContent="Eliminando…";
+  try{
+    await apiPost("eliminar",{fileId:actual.fileId});
+    toast("Documento movido a la papelera");
+    $confirmDialog.classList.remove("on"); cerrarPanel();
+    await cargarCatalogo();
+  }catch(err){
+    toast(err.codigo==="CLAVE" ? "La sesión expiró. Vuelve a entrar." : ("No se pudo eliminar: "+err.message));
+    $confirmDialog.classList.remove("on");
+  }finally{ $btn.disabled=false; $btn.textContent=original; }
+});
+
 /* ─── Toast ─── */
 let tTimer=null;
 function toast(msg){
@@ -706,6 +858,8 @@ $limpiar.addEventListener("click",()=>{ $entrada.value=""; onInput(""); $entrada
 
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){
+    if(document.getElementById("confirmDialog").classList.contains("on")) return document.getElementById("confirmDialog").classList.remove("on");
+    if(document.getElementById("panelEditar").classList.contains("on")) return cerrarEditar();
     if(document.getElementById("panelSubir").classList.contains("on")) return cerrarSubir();
     if($panel.classList.contains("on")) return cerrarPanel();
     if(consulta){ $entrada.value=""; onInput(""); }
@@ -733,7 +887,7 @@ async function apiPost(action,extra){
 }
 function normalizarRegistros(arr){
   return arr.map((d,i)=>({
-    id: d.id!=null?d.id:i+1, tipo:d.tipo||"Documento", titulo:d.titulo||"(Sin título)",
+    id: d.id!=null?d.id:i+1, fileId: d.fileId||null, tipo:d.tipo||"Documento", titulo:d.titulo||"(Sin título)",
     descripcion:d.descripcion||"", unidad:d.unidad||"UCG", fecha:d.fecha||"",
     cuerpo:d.cuerpo||"", urlDescarga:d.urlDescarga||"", urlVer:d.urlVer||""
   }));
@@ -889,15 +1043,17 @@ function pintarSkeletons(n){
 /* Vista rápida (hover en escritorio, botón en táctil) */
 const $quickview=document.getElementById("quickview");
 const hoverFino = !!(window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine)").matches);
-let vistaTimer=null, quickviewIdActual=null;
+let vistaTimer=null, ocultarTimer=null, quickviewIdActual=null;
 
 function programarVista(el,id){
-  cancelarVista();
+  cancelarOcultar();
+  clearTimeout(vistaTimer);
   vistaTimer=setTimeout(()=>mostrarVista(el,id),260);
 }
-function cancelarVista(){
-  clearTimeout(vistaTimer);
-  ocultarVista();
+function cancelarOcultar(){ clearTimeout(ocultarTimer); }
+function programarOcultar(){
+  cancelarOcultar();
+  ocultarTimer=setTimeout(ocultarVista,180);
 }
 function mostrarVista(el,id){
   const p=PLANTILLAS.find(x=>x.id===id); if(!p) return;
@@ -909,8 +1065,11 @@ function mostrarVista(el,id){
   badge.className="badge "+(CLASE_BADGE[p.tipo]||"b-otro");
   badge.innerHTML=iconoTipo(p.tipo)+escaparHTML(p.tipo);
   document.getElementById("qv-titulo").innerHTML=resaltar(escaparHTML(p.titulo),tVis);
-  const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:fragmentoAmplio(p.cuerpo,tNorm);
-  document.getElementById("qv-cuerpo").innerHTML=resaltar(escaparHTML(base),tVis);
+  // Documento completo (ya no un fragmento acotado): ahora se puede desplazar dentro de la ventana.
+  const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:(p.cuerpo||"");
+  const $cuerpo=document.getElementById("qv-cuerpo");
+  $cuerpo.innerHTML=resaltar(escaparHTML(base),tVis);
+  $cuerpo.scrollTop=0;
 
   // Posicionar cerca de la tarjeta, dentro del viewport
   const r=el.getBoundingClientRect();
@@ -925,11 +1084,17 @@ function mostrarVista(el,id){
   if(top + qh > vh - 16) top = Math.max(16, vh - qh - 16);
   $quickview.style.left = left+"px";
   $quickview.style.top = top+"px";
+
+  // Si hay una búsqueda activa, salta directo a la primera coincidencia resaltada.
+  const primeraMarca=$cuerpo.querySelector("mark");
+  if(primeraMarca) primeraMarca.scrollIntoView({block:"center"});
 }
-function ocultarVista(inmediato){
+function ocultarVista(){
   $quickview.classList.remove("on");
   quickviewIdActual=null;
 }
+$quickview.addEventListener("mouseenter",cancelarOcultar);
+$quickview.addEventListener("mouseleave",programarOcultar);
 window.addEventListener("scroll",()=>ocultarVista(),true);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") ocultarVista(); });
 
