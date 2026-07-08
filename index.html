@@ -68,6 +68,10 @@
     background:var(--accent-soft);border:1px solid #DDE0FB;color:#3730A3;font-size:13px}
   .aviso svg{width:17px;height:17px;flex:none}
   .aviso b{font-weight:700}
+  .aviso code{font-size:12px;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:5px;font-weight:600}
+  .aviso-alerta{background:#FBF6E7;border-color:#EBDBA9;color:#7A5C12}
+  .aviso-alerta b{color:#5F470E}
+  .aviso-alerta code{background:rgba(0,0,0,.07)}
 
   .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -357,6 +361,11 @@
       <div><b>Versión de demostración.</b> Los documentos son de ejemplo. Al conectar la API se mostrará el archivo real y se activará el ingreso de documentos.</div>
     </div>
 
+    <div class="aviso aviso-alerta" id="avisoBackend" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div><b>Tu Apps Script (backend) no está en la última versión.</b> Faltan las funciones de Editar/Eliminar. Pega el <code>Codigo.gs</code> más reciente en tu proyecto de Apps Script y vuelve a implementarlo (Nueva versión).</div>
+    </div>
+
     <div class="toolbar">
       <div class="chips" id="filtros"></div>
       <div class="conteo" id="conteo"></div>
@@ -547,6 +556,16 @@
 const CONFIG = {
   API_URL: "https://script.google.com/macros/s/AKfycbzytNgwtS3FHybouT1Kf8rb0nqdu9YZs0vv7W3kP1SvZutN3hvSbJBbW0jt1EN2uJeH0w/exec"
 };
+
+// Versión mínima de Codigo.gs que esta página espera (debe coincidir con
+// CONFIG.VERSION_BACKEND en el Apps Script). Si el backend responde con una
+// versión menor (o sin versión), se avisa en pantalla que hay que actualizarlo.
+const VERSION_FRONTEND_REQUIERE=3;
+function revisarVersionBackend(respuesta){
+  const version=(respuesta && typeof respuesta.version==="number")?respuesta.version:0;
+  const $av=document.getElementById("avisoBackend");
+  if($av) $av.style.display = (version < VERSION_FRONTEND_REQUIERE) ? "flex" : "none";
+}
 
 const PLANTILLAS_DEMO = [
   { id:1, tipo:"Decreto", titulo:"Decreto de subrogación de funcionario", descripcion:"", unidad:"UCG", fecha:"2026-06-12",
@@ -765,13 +784,28 @@ document.getElementById("copiar").addEventListener("click",async()=>{
 
 /* ─── Enviar por correo (mailto: abre el cliente de correo predeterminado) ─── */
 function abrirCorreo(p){
-  const asunto=encodeURIComponent(p.titulo||"");
-  const cuerpoTexto=(p.cuerpo||"").replace(/\n/g,"\r\n");
-  const cuerpoCod=encodeURIComponent(cuerpoTexto);
-  if((asunto.length+cuerpoCod.length) > 1800){
-    toast("El texto es largo: si tu cliente de correo lo recorta, usa 'Copiar' y pégalo manualmente.");
+  const asunto=p.titulo||"";
+  const cuerpo=(p.cuerpo||"").replace(/\n/g,"\r\n");
+  const asuntoCod=encodeURIComponent(asunto);
+  const cuerpoCod=encodeURIComponent(cuerpo);
+  const LIMITE=1500; // umbral prudente: sobre esto, muchos clientes de correo ignoran el enlace sin avisar
+  if((asuntoCod.length+cuerpoCod.length) > LIMITE){
+    // Demasiado largo para confiar en el enlace "mailto": lo copiamos directo, listo para pegar.
+    const textoCompleto="Asunto: "+asunto+"\n\n"+(p.cuerpo||"");
+    navigator.clipboard.writeText(textoCompleto).then(()=>{
+      toast("Texto copiado: es muy largo para abrir el correo automáticamente. Pégalo en un mensaje nuevo.");
+    }).catch(()=>{
+      toast("El texto es muy largo para abrir el correo automáticamente. Usa 'Copiar' y pégalo en un mensaje nuevo.");
+    });
+    return;
   }
-  window.location.href="mailto:?subject="+asunto+"&body="+cuerpoCod;
+  // Enlace real simulado con clic: más confiable que cambiar location.href en varios navegadores.
+  const enlace=document.createElement("a");
+  enlace.href="mailto:?subject="+asuntoCod+"&body="+cuerpoCod;
+  document.body.appendChild(enlace);
+  enlace.click();
+  document.body.removeChild(enlace);
+  toast("Abriendo tu programa de correo… Si no ocurre nada, usa 'Copiar' y pégalo manualmente.");
 }
 document.getElementById("enviarCorreo").addEventListener("click",()=>{ if(actual) abrirCorreo(actual); });
 
@@ -779,6 +813,10 @@ document.getElementById("enviarCorreo").addEventListener("click",()=>{ if(actual
 const $telonEditar=document.getElementById("telonEditar");
 const $panelEditar=document.getElementById("panelEditar");
 function puedeEditarOEliminar(p){ return subidaDisponible() && !!(p && p.fileId); }
+function avisoNoDisponible(p){
+  if(!subidaDisponible()){ toast("Disponible solo con el archivo real conectado."); return; }
+  if(!(p && p.fileId)){ toast("Este documento no tiene identificador. Actualiza tu Apps Script a la versión más reciente y vuelve a implementarlo."); return; }
+}
 function abrirEditar(p){
   document.getElementById("ed-titulo").value=p.titulo||"";
   document.getElementById("ed-tipo").value=p.tipo||"Documento";
@@ -791,7 +829,7 @@ document.getElementById("cerrarEditar").addEventListener("click",cerrarEditar);
 $telonEditar.addEventListener("click",cerrarEditar);
 document.getElementById("btnEditar").addEventListener("click",()=>{
   if(!actual) return;
-  if(!puedeEditarOEliminar(actual)){ toast("Disponible solo con el archivo real conectado."); return; }
+  if(!puedeEditarOEliminar(actual)){ avisoNoDisponible(actual); return; }
   abrirEditar(actual);
 });
 document.getElementById("guardarEdicion").addEventListener("click",async()=>{
@@ -817,7 +855,7 @@ document.getElementById("guardarEdicion").addEventListener("click",async()=>{
 const $confirmDialog=document.getElementById("confirmDialog");
 document.getElementById("btnEliminar").addEventListener("click",()=>{
   if(!actual) return;
-  if(!puedeEditarOEliminar(actual)){ toast("Disponible solo con el archivo real conectado."); return; }
+  if(!puedeEditarOEliminar(actual)){ avisoNoDisponible(actual); return; }
   document.getElementById("confirm-texto").textContent="«"+actual.titulo+"» se moverá a la papelera de Drive y podrá recuperarse desde allí si es necesario.";
   $confirmDialog.classList.add("on");
 });
@@ -924,7 +962,8 @@ async function intentarEntrar(){
   $btn.disabled=true; $btn.textContent="Verificando…"; claveSesion=clave;
   try{
     // Paso 1: solo confirma la clave (instantáneo, no toca Drive).
-    await apiPost("verificar");
+    const resVerificar=await apiPost("verificar");
+    revisarVersionBackend(resVerificar);
     ocultarLogin();
     // Paso 2: recién aquí se carga el catálogo, con las tarjetas fantasma
     // visibles; puede tardar si Drive necesita reconvertir documentos.
@@ -1095,7 +1134,16 @@ function ocultarVista(){
 }
 $quickview.addEventListener("mouseenter",cancelarOcultar);
 $quickview.addEventListener("mouseleave",programarOcultar);
-window.addEventListener("scroll",()=>ocultarVista(),true);
+$quickview.addEventListener("click",()=>{
+  if(quickviewIdActual!=null){ const id=quickviewIdActual; ocultarVista(); abrirPanel(id); }
+});
+$quickview.style.cursor="pointer";
+function esDentroDeQuickview(nodo){
+  let n=nodo;
+  while(n){ if(n===$quickview) return true; n=n.parentNode||n.parentElement||null; }
+  return false;
+}
+window.addEventListener("scroll",(e)=>{ if(!esDentroDeQuickview(e.target)) ocultarVista(); },true);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") ocultarVista(); });
 
 /* Tema claro/oscuro */
