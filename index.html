@@ -560,7 +560,7 @@ function construirFiltros(){
   let out="";
   if(nFav>0){
     out+='<button class="chip chip-fav '+(filtroTipo==="★"?"on":"")+'" data-tipo="★">'
-      +'<svg viewBox="0 0 24 24" fill="'+(filtroTipo==="★"?"currentColor":"none")+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 21.4l-5.8 3.05 1.1-6.45-4.7-4.6 6.5-.95z"/></svg>'
+      +'<svg viewBox="0 0 24 24" fill="'+(filtroTipo==="★"?"currentColor":"none")+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
       +'Favoritos<span class="c">'+nFav+'</span></button>';
   }
   out+=tipos.map(tp=>{
@@ -610,7 +610,7 @@ function render(){
       +'<button class="quick-btn" data-quick="'+p.id+'" title="Vista rápida" aria-label="Vista rápida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>'
       +'<div class="folio-top"><span class="ref">'+folioH+' · '+escaparHTML(p.unidad)+'</span>'
       +'<span class="der">'
-      +'<button class="fav-btn'+(fav?' act':'')+'" data-fav="'+p.id+'" title="'+(fav?'Quitar de favoritos':'Marcar como favorito')+'" aria-label="Favorito"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 21.4l-5.8 3.05 1.1-6.45-4.7-4.6 6.5-.95z"/></svg></button>'
+      +'<button class="fav-btn'+(fav?' act':'')+'" data-fav="'+p.id+'" title="'+(fav?'Quitar de favoritos':'Marcar como favorito')+'" aria-label="Favorito"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>'
       +'<span class="badge '+(CLASE_BADGE[p.tipo]||'b-otro')+'">'+iconoTipo(p.tipo)+escaparHTML(p.tipo)+'</span>'
       +'</span></div>'
       +'<h3>'+tituloH+'</h3>'
@@ -768,11 +768,15 @@ async function intentarEntrar(){
   const $btn=document.getElementById("entrarBtn");
   $btn.disabled=true; $btn.textContent="Verificando…"; claveSesion=clave;
   try{
-    const data=await apiPost("listar");
-    PLANTILLAS=normalizarRegistros(data.plantillas||[]);
-    ocultarLogin(); pintarCatalogo();
+    // Paso 1: solo confirma la clave (instantáneo, no toca Drive).
+    await apiPost("verificar");
+    ocultarLogin();
+    // Paso 2: recién aquí se carga el catálogo, con las tarjetas fantasma
+    // visibles; puede tardar si Drive necesita reconvertir documentos.
+    await cargarCatalogo();
   }catch(err){
     claveSesion="";
+    mostrarLogin();
     $accesoError.textContent = err.codigo==="CLAVE" ? "Clave incorrecta. Inténtalo de nuevo." : ("No se pudo conectar: "+err.message);
     $claveInput.select();
   }finally{ $btn.disabled=false; $btn.textContent="Entrar"; }
@@ -897,13 +901,15 @@ function cancelarVista(){
 function mostrarVista(el,id){
   const p=PLANTILLAS.find(x=>x.id===id); if(!p) return;
   quickviewIdActual=id;
+  const tNorm=normalizar(consulta).split(/\s+/).filter(Boolean);
+  const tVis=consulta.split(/\s+/).filter(Boolean);
   document.getElementById("qv-ref").textContent=p.folio+" · "+p.unidad;
   const badge=document.getElementById("qv-badge");
   badge.className="badge "+(CLASE_BADGE[p.tipo]||"b-otro");
   badge.innerHTML=iconoTipo(p.tipo)+escaparHTML(p.tipo);
-  document.getElementById("qv-titulo").textContent=p.titulo;
-  const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:fragmentoAmplio(p.cuerpo,normalizar(consulta).split(/\s+/).filter(Boolean));
-  document.getElementById("qv-cuerpo").textContent=base;
+  document.getElementById("qv-titulo").innerHTML=resaltar(escaparHTML(p.titulo),tVis);
+  const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:fragmentoAmplio(p.cuerpo,tNorm);
+  document.getElementById("qv-cuerpo").innerHTML=resaltar(escaparHTML(base),tVis);
 
   // Posicionar cerca de la tarjeta, dentro del viewport
   const r=el.getBoundingClientRect();
@@ -929,8 +935,9 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape") ocultarVista(); })
 /* Tema claro/oscuro */
 function aplicarTema(t){ const r=document.documentElement; if(t==="dark") r.setAttribute("data-theme","dark"); else r.removeAttribute("data-theme"); }
 function initTema(){
-  let t=null; try{ t=localStorage.getItem("ucg_tema"); }catch(e){}
-  if(!t){ t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"; }
+  // Por defecto siempre claro, salvo que la persona haya elegido oscuro
+  // manualmente con el botón (queda guardado en este navegador).
+  let t="light"; try{ const guardado=localStorage.getItem("ucg_tema"); if(guardado) t=guardado; }catch(e){}
   aplicarTema(t);
 }
 document.getElementById("toggleTema").addEventListener("click",()=>{
