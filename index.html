@@ -175,24 +175,25 @@
   footer .f{font-size:11.5px;letter-spacing:.03em;color:var(--txt-3);font-weight:500}
 
   /* ═══ LOGIN ═══ */
+  /* Fondo siempre claro (independiente del tema oscuro/claro de la app). */
   .acceso{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;
-    background:linear-gradient(160deg,#1E293B,#0F172A)}
-  .acceso::before{content:"";position:absolute;inset:0;opacity:.6;
-    background:radial-gradient(600px 360px at 22% 15%,rgba(79,70,229,.35),transparent 60%),radial-gradient(500px 340px at 85% 85%,rgba(59,130,246,.18),transparent 60%)}
-  .acceso-card{position:relative;width:100%;max-width:390px;background:var(--surface);border-radius:20px;padding:36px 32px 30px;
-    text-align:center;box-shadow:var(--sh-lg);animation:pop .45s var(--e) both}
+    background:linear-gradient(160deg,#F7F8FC,#EEF0FB)}
+  .acceso::before{content:"";position:absolute;inset:0;opacity:1;
+    background:radial-gradient(650px 380px at 20% 10%,rgba(79,70,229,.14),transparent 60%),radial-gradient(550px 360px at 88% 90%,rgba(99,102,241,.10),transparent 60%)}
+  .acceso-card{position:relative;width:100%;max-width:390px;background:#FFFFFF;border-radius:20px;padding:36px 32px 30px;
+    text-align:center;box-shadow:0 24px 60px rgba(15,23,42,.14);animation:pop .45s var(--e) both}
   .acceso-ic{width:50px;height:50px;border-radius:14px;background:var(--emblema) center/70% no-repeat, linear-gradient(145deg,#4F46E5,#4338CA);color:#fff;
     display:grid;place-items:center;margin:0 auto 18px;box-shadow:0 8px 20px rgba(79,70,229,.3)}
   .acceso-ic svg{width:26px;height:26px}
-  .acceso-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt-3);font-weight:700;margin-bottom:9px}
-  .acceso-card h2{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:9px}
-  .acceso-card p{font-size:13.5px;color:var(--txt-2);margin-bottom:22px;line-height:1.5}
-  .acceso-campo{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border-2);border-radius:12px;
+  .acceso-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#94A0B8;font-weight:700;margin-bottom:9px}
+  .acceso-card h2{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:9px;color:#0F172A}
+  .acceso-card p{font-size:13.5px;color:#5B657A;margin-bottom:22px;line-height:1.5}
+  .acceso-campo{display:flex;align-items:center;background:#FFFFFF;border:1.5px solid #DDE1EA;border-radius:12px;
     padding:0 4px 0 15px;height:50px;transition:border-color .18s,box-shadow .18s}
   .acceso-campo:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
-  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;height:100%;color:var(--txt)}
-  #verClave{border:none;background:transparent;color:var(--txt-3);width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s}
-  #verClave:hover{background:var(--bg)}
+  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;height:100%;color:#0F172A}
+  #verClave{border:none;background:transparent;color:#94A0B8;width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s}
+  #verClave:hover{background:#F1F3F9}
   #verClave svg{width:18px;height:18px}
   .acceso-error{color:var(--red);font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left;font-weight:500}
   .acceso-btn{width:100%;margin-top:16px;height:48px}
