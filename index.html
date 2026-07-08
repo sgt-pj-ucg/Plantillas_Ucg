@@ -722,9 +722,9 @@ function render(){
     el.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); abrirPanel(Number(el.dataset.id)); } });
     if(hoverFino){
       el.addEventListener("mouseenter",()=>programarVista(el,Number(el.dataset.id)));
-      el.addEventListener("mouseleave",()=>{ clearTimeout(vistaTimer); programarOcultar(); });
+      el.addEventListener("mouseleave",cancelarVista);
       el.addEventListener("focus",()=>programarVista(el,Number(el.dataset.id)));
-      el.addEventListener("blur",()=>{ clearTimeout(vistaTimer); programarOcultar(); });
+      el.addEventListener("blur",cancelarVista);
     }
   });
   $grilla.querySelectorAll(".fav-btn").forEach(b=>{
@@ -782,23 +782,10 @@ document.getElementById("copiar").addEventListener("click",async()=>{
   catch(e){ toast("No se pudo copiar automáticamente"); }
 });
 
-/* ─── Enviar por correo (mailto: abre el cliente de correo predeterminado) ─── */
+/* ─── Enviar por correo (mailto: abre el cliente de correo predeterminado, sin límite de largo) ─── */
 function abrirCorreo(p){
-  const asunto=p.titulo||"";
-  const cuerpo=(p.cuerpo||"").replace(/\n/g,"\r\n");
-  const asuntoCod=encodeURIComponent(asunto);
-  const cuerpoCod=encodeURIComponent(cuerpo);
-  const LIMITE=1500; // umbral prudente: sobre esto, muchos clientes de correo ignoran el enlace sin avisar
-  if((asuntoCod.length+cuerpoCod.length) > LIMITE){
-    // Demasiado largo para confiar en el enlace "mailto": lo copiamos directo, listo para pegar.
-    const textoCompleto="Asunto: "+asunto+"\n\n"+(p.cuerpo||"");
-    navigator.clipboard.writeText(textoCompleto).then(()=>{
-      toast("Texto copiado: es muy largo para abrir el correo automáticamente. Pégalo en un mensaje nuevo.");
-    }).catch(()=>{
-      toast("El texto es muy largo para abrir el correo automáticamente. Usa 'Copiar' y pégalo en un mensaje nuevo.");
-    });
-    return;
-  }
+  const asuntoCod=encodeURIComponent(p.titulo||"");
+  const cuerpoCod=encodeURIComponent((p.cuerpo||"").replace(/\n/g,"\r\n"));
   // Enlace real simulado con clic: más confiable que cambiar location.href en varios navegadores.
   const enlace=document.createElement("a");
   enlace.href="mailto:?subject="+asuntoCod+"&body="+cuerpoCod;
@@ -1082,17 +1069,15 @@ function pintarSkeletons(n){
 /* Vista rápida (hover en escritorio, botón en táctil) */
 const $quickview=document.getElementById("quickview");
 const hoverFino = !!(window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine)").matches);
-let vistaTimer=null, ocultarTimer=null, quickviewIdActual=null;
+let vistaTimer=null, quickviewIdActual=null;
 
 function programarVista(el,id){
-  cancelarOcultar();
   clearTimeout(vistaTimer);
   vistaTimer=setTimeout(()=>mostrarVista(el,id),260);
 }
-function cancelarOcultar(){ clearTimeout(ocultarTimer); }
-function programarOcultar(){
-  cancelarOcultar();
-  ocultarTimer=setTimeout(ocultarVista,180);
+function cancelarVista(){
+  clearTimeout(vistaTimer);
+  ocultarVista();
 }
 function mostrarVista(el,id){
   const p=PLANTILLAS.find(x=>x.id===id); if(!p) return;
@@ -1104,7 +1089,7 @@ function mostrarVista(el,id){
   badge.className="badge "+(CLASE_BADGE[p.tipo]||"b-otro");
   badge.innerHTML=iconoTipo(p.tipo)+escaparHTML(p.tipo);
   document.getElementById("qv-titulo").innerHTML=resaltar(escaparHTML(p.titulo),tVis);
-  // Documento completo (ya no un fragmento acotado): ahora se puede desplazar dentro de la ventana.
+  // Documento completo (no un fragmento acotado): se puede desplazar dentro de la ventana.
   const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:(p.cuerpo||"");
   const $cuerpo=document.getElementById("qv-cuerpo");
   $cuerpo.innerHTML=resaltar(escaparHTML(base),tVis);
@@ -1132,8 +1117,6 @@ function ocultarVista(){
   $quickview.classList.remove("on");
   quickviewIdActual=null;
 }
-$quickview.addEventListener("mouseenter",cancelarOcultar);
-$quickview.addEventListener("mouseleave",programarOcultar);
 $quickview.addEventListener("click",()=>{
   if(quickviewIdActual!=null){ const id=quickviewIdActual; ocultarVista(); abrirPanel(id); }
 });
